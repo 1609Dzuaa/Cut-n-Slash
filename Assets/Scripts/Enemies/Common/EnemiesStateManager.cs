@@ -4,30 +4,44 @@ using UnityEngine;
 
 public class EnemiesStateManager : CharactersStateManager
 {
-    //Gom đống này vứt vào SO
-    protected Transform _playerCheck;
-    protected float _pCheckDistance;
-    protected LayerMask _playerLayer;
-    protected Transform _groundCheck;
-    protected Transform _wallCheck;
-    protected LayerMask _gwLayer;
+    [Header("Check Properties")]
+    [SerializeField] protected Transform _playerCheck;
+    [SerializeField] protected Transform _groundCheck;
+    [SerializeField] protected Transform _wallCheck;
+
+    protected RaycastHit2D _pRayHit;
     protected bool _hasDetectedPlayer;
     protected bool _hasDetectedGround;
     protected bool _hasDetectedWall;
-    protected float _attackDelay;
-    protected float _patrolTime;
-    protected float _restTime;
 
-    public float PCheckDistance { get => _pCheckDistance; }
+    [Header("SO Data")]
+    [SerializeField] EnemiesSO _enemiesSO;
 
     public bool HasDetectedPlayer { get => _hasDetectedPlayer; }
 
-    public float AttackDelay { get => _attackDelay; }
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
-    public float PatrolTime { get => _patrolTime; }
+    protected override void Start()
+    {
+        base.Start();
+    }
 
-    public float RestTime { get => _restTime; }
+    protected override void SetupProperties()
+    {
+        if (Mathf.Abs(transform.rotation.eulerAngles.y) >= 180f)
+            _isFacingRight = false;
+        //Debug.Log("IfR, yAngles: " + _isFacingRight + ", " + transform.rotation.eulerAngles.y);
+    }
 
+    protected override void Update()
+    {
+        base.Update();
+        DetectPlayer();
+        DrawRayDetectPlayer();
+    }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision) { }
 
@@ -35,36 +49,52 @@ public class EnemiesStateManager : CharactersStateManager
 
     protected virtual void DetectPlayer()
     {
-        //Tạo 1 obj vô hình cùng layer với Player block giữa các wall
-        //Phân biệt nó vs Player = Tag
-
         /*if (BuffsManager.Instance.GetTypeOfBuff(GameEnums.EBuffs.Invisible).IsAllowToUpdate)
         {
             _hasDetectedPlayer = false;
             return;
         }*/
 
+        //Tạo 1 obj vô hình cùng layer với Player block giữa các wall
+        //Phân biệt nó vs Player = Tag
         if (!_isFacingRight)
         {
+            _pRayHit = Physics2D.Raycast(_playerCheck.position, Vector2.left, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
 
-            /*RaycastHit2D hit = Physics2D.Raycast(_playerCheck.position, Vector2.left, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
-
-            if (hit && hit.collider.CompareTag(GameConstants.PLAYER_TAG))
+            if (_pRayHit && _pRayHit.collider.CompareTag(GameConstants.PLAYER_TAG))
                 _hasDetectedPlayer = true;
             else
                 _hasDetectedPlayer = false;
-            _hasDetectedPlayer = Physics2D.Raycast(_playerCheck.position, Vector2.left, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);*/
         }
         else
         {
-            /*RaycastHit2D hit = Physics2D.Raycast(_playerCheck.position, Vector2.right, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
-            if (hit && hit.collider.CompareTag(GameConstants.PLAYER_TAG))
+            _pRayHit = Physics2D.Raycast(_playerCheck.position, Vector2.right, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
+
+            if (_pRayHit && _pRayHit.collider.CompareTag(GameConstants.PLAYER_TAG))
                 _hasDetectedPlayer = true;
             else
                 _hasDetectedPlayer = false;
-
-            _hasDetectedPlayer = Physics2D.Raycast(_playerCheck.position, Vector2.right, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);*/
         }
     }
+
+    protected virtual void DrawRayDetectPlayer()
+    {
+        if (_hasDetectedPlayer)
+        {
+            if (!_isFacingRight)
+                Debug.DrawRay(_playerCheck.position, Vector2.left * _enemiesSO.PlayerCheckDistance, Color.red);
+            else
+                Debug.DrawRay(_playerCheck.position, Vector2.right * _enemiesSO.PlayerCheckDistance, Color.red);
+        }
+        else
+        {
+            if (!_isFacingRight)
+                Debug.DrawRay(_playerCheck.position, Vector2.left * _enemiesSO.PlayerCheckDistance, Color.green);
+            else
+                Debug.DrawRay(_playerCheck.position, Vector2.right * _enemiesSO.PlayerCheckDistance, Color.green);
+        }
+    }
+
+    protected virtual void SelfDestroy() { Destroy(gameObject); }
 
 }

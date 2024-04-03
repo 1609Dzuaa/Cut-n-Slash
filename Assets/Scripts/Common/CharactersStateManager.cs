@@ -6,7 +6,7 @@ public class CharactersStateManager : GameObjectController
 {
     protected CharacterBaseState _state;
     protected Rigidbody2D _rb;
-    protected bool _isFacingRight;
+    protected bool _isFacingRight = true;
     protected float _hp;
     protected float _damageDealt;
 
@@ -24,6 +24,10 @@ public class CharactersStateManager : GameObjectController
         base.GetReferenceComponents();
         _rb = GetComponent<Rigidbody2D>();
     }
+
+    protected override void Update() { if (_state != null) _state.UpdateState(); }
+
+    protected void FixedUpdate() { if (_state != null) _state.FixedUpdate(); }
 
     public void ChangeState(CharacterBaseState state)
     {

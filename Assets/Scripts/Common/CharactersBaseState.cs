@@ -18,7 +18,7 @@ public class CharacterBaseState
 
     public virtual void ExitState() { }
 
-    public virtual void Update() { }
+    public virtual void UpdateState() { }
 
     public virtual void FixedUpdate() { }
 }
