@@ -5,4 +5,5 @@ using UnityEngine;
 public static class GameConstants
 {
     public const string PLAYER_TAG = "Player";
+    public const string STATE_ANIM = "state";
 }

@@ -13,6 +13,8 @@ public class EnemiesSO : ScriptableObject
     [SerializeField] private float _playerCheckDistance;
     [SerializeField] private float _gwCheckDistance;
 
+    [Header("Speed")]
+    [SerializeField] private float _patrolSpeed;
 
     [Header("Force")]
     [SerializeField] private Vector2 _knockForce;
@@ -29,6 +31,8 @@ public class EnemiesSO : ScriptableObject
     public float PlayerCheckDistance { get { return _playerCheckDistance; } }
 
     public float GWCheckDistance { get { return _gwCheckDistance; } }
+
+    public float PatrolSpeed { get { return _patrolSpeed; } }
 
     public Vector2 KnockForce { get { return _knockForce; } }
 

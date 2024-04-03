@@ -9,13 +9,33 @@ public class EnemiesStateManager : CharactersStateManager
     [SerializeField] protected Transform _groundCheck;
     [SerializeField] protected Transform _wallCheck;
 
+    [Header("SO Data")]
+    [SerializeField] protected EnemiesSO _enemiesSO;
+
+    #region States
+    protected EnemiesIdleState _idleState = new();
+    protected EnemiesPatrolState _patrolState = new();
+    protected EnemiesAttackState _attackState = new();
+    protected EnemiesGetHitState _getHitState = new();
+    protected EnemiesDieState _dieState = new();
+    #endregion
+
     protected RaycastHit2D _pRayHit;
     protected bool _hasDetectedPlayer;
     protected bool _hasDetectedGround;
     protected bool _hasDetectedWall;
 
-    [Header("SO Data")]
-    [SerializeField] EnemiesSO _enemiesSO;
+    public EnemiesSO GetEnemiesSO() { return _enemiesSO; }
+
+    public EnemiesIdleState GetIdleState() { return _idleState; }
+
+    public EnemiesPatrolState GetPatrolState() { return _patrolState; }
+
+    public EnemiesAttackState GetAttackState() { return _attackState; }
+
+    public EnemiesGetHitState GetGetHitState() { return _getHitState; }
+
+    public EnemiesDieState GetDieState() { return _dieState; }
 
     public bool HasDetectedPlayer { get => _hasDetectedPlayer; }
 
@@ -33,6 +53,8 @@ public class EnemiesStateManager : CharactersStateManager
     {
         if (Mathf.Abs(transform.rotation.eulerAngles.y) >= 180f)
             _isFacingRight = false;
+        _state = _idleState;
+        _state.EnterState(this);
         //Debug.Log("IfR, yAngles: " + _isFacingRight + ", " + transform.rotation.eulerAngles.y);
     }
 
@@ -96,5 +118,16 @@ public class EnemiesStateManager : CharactersStateManager
     }
 
     protected virtual void SelfDestroy() { Destroy(gameObject); }
+
+    public void TriggerAttack()
+    {
+
+    }
+
+    //Anim event của Atk
+    protected void BackToIdle()
+    {
+        ChangeState(_idleState);
+    }
 
 }
