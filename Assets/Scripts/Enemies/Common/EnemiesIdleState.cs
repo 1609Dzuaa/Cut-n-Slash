@@ -6,6 +6,7 @@ public class EnemiesIdleState : CharacterBaseState
 {
     protected EnemiesStateManager _enemiesSM;
     protected float _entryTime;
+    protected bool _hasTriggeredAttack;
 
     public override void EnterState(CharactersStateManager charactersSM)
     {
@@ -19,13 +20,16 @@ public class EnemiesIdleState : CharacterBaseState
 
     public override void ExitState()
     {
-        base.ExitState();
+        _hasTriggeredAttack = false;
     }
 
     public override void UpdateState()
     {
         if (CheckIfCanAttack())
-            _enemiesSM.ChangeState(_enemiesSM.GetAttackState());
+        {
+            _hasTriggeredAttack = true;
+            _enemiesSM.StartCoroutine(_enemiesSM.TriggerAttack());
+        }
         else if (CheckIfCanPatrol())
             _enemiesSM.ChangeState(_enemiesSM.GetPatrolState());
     }
@@ -37,7 +41,7 @@ public class EnemiesIdleState : CharacterBaseState
 
     protected virtual bool CheckIfCanAttack()
     {
-        return _enemiesSM.HasDetectedPlayer;   
+        return _enemiesSM.HasDetectedPlayer && !_hasTriggeredAttack;   
     }
 
     public override void FixedUpdate()

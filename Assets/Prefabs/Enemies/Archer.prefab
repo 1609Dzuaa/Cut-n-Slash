@@ -173,6 +173,7 @@ MonoBehaviour:
   _groundCheck: {fileID: 0}
   _wallCheck: {fileID: 0}
   _enemiesSO: {fileID: 11400000, guid: f75c2cda5fc29114eaaf40a3b6441584, type: 2}
+  _withdrawnForce: {x: 3, y: 3}
 --- !u!1 &7372436822149816933
 GameObject:
   m_ObjectHideFlags: 0

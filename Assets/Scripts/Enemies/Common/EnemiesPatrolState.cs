@@ -6,6 +6,7 @@ public class EnemiesPatrolState : CharacterBaseState
 {
     protected EnemiesStateManager _enemiesSM;
     protected float _entryTime;
+    protected bool _hasTriggeredAttack;
 
     public override void EnterState(CharactersStateManager charactersSM)
     {
@@ -23,10 +24,13 @@ public class EnemiesPatrolState : CharacterBaseState
 
     public override void UpdateState()
     {
-        if (CheckIfCanRest())
+        if (CheckIfCanAttack())
+        {
+            _hasTriggeredAttack = true;
+            _enemiesSM.StartCoroutine(_enemiesSM.TriggerAttack());
+        }
+        else if (CheckIfCanRest())
             _enemiesSM.ChangeState(_enemiesSM.GetIdleState());
-        else if (CheckIfCanAttack())
-            _enemiesSM.ChangeState(_enemiesSM.GetAttackState());
     }
 
     protected virtual bool CheckIfCanRest()
@@ -36,14 +40,14 @@ public class EnemiesPatrolState : CharacterBaseState
 
     protected virtual bool CheckIfCanAttack()
     {
-        return _enemiesSM.HasDetectedPlayer;
+        return _enemiesSM.HasDetectedPlayer && !_hasTriggeredAttack;
     }
 
     public override void FixedUpdate()
     {
         if (_enemiesSM.IsFacingRight)
-            _enemiesSM.GetRigidbody2D.velocity = new Vector2(_enemiesSM.GetEnemiesSO().PatrolSpeed, 0f);
+            _enemiesSM.GetRigidbody2D.velocity = new Vector2(_enemiesSM.GetEnemiesSO().PatrolSpeed, _enemiesSM.GetRigidbody2D.velocity.y);
         else
-            _enemiesSM.GetRigidbody2D.velocity = new Vector2(-_enemiesSM.GetEnemiesSO().PatrolSpeed, 0f);
+            _enemiesSM.GetRigidbody2D.velocity = new Vector2(-_enemiesSM.GetEnemiesSO().PatrolSpeed, _enemiesSM.GetRigidbody2D.velocity.y);
     }
 }

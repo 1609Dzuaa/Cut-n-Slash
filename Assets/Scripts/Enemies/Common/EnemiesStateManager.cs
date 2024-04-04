@@ -119,9 +119,11 @@ public class EnemiesStateManager : CharactersStateManager
 
     protected virtual void SelfDestroy() { Destroy(gameObject); }
 
-    public void TriggerAttack()
+    public IEnumerator TriggerAttack()
     {
+        yield return new WaitForSeconds(_enemiesSO.AttackDelay);
 
+        ChangeState(_attackState);
     }
 
     //Anim event của Atk
