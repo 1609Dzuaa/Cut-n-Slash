@@ -4,6 +4,18 @@ using UnityEngine;
 
 public static class GameEnums
 {
+    public enum EPlayerState
+    { 
+        Idle = 0, 
+        Walk = 1, 
+        Run = 2, 
+        Jump = 3, 
+        Fall = 4,
+        Attack1 = 5,
+        Attack2 = 6,
+        Attack3 = 7,
+    }
+
     //Dùng chung
     public enum EEnemiesCommonState
     { Idle, Patrol, Attack, GetHit, Die }

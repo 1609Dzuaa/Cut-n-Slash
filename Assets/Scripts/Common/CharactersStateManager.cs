@@ -27,7 +27,7 @@ public class CharactersStateManager : GameObjectController
 
     protected override void Update() { if (_state != null) _state.UpdateState(); }
 
-    protected void FixedUpdate() { if (_state != null) _state.FixedUpdate(); }
+    protected virtual void FixedUpdate() { if (_state != null) _state.FixedUpdate(); }
 
     public void ChangeState(CharacterBaseState state)
     {
