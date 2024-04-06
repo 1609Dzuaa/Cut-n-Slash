@@ -4,7 +4,13 @@ using UnityEngine;
 
 public static class GameConstants
 {
+    #region Tags
+
     public const string PLAYER_TAG = "Player";
+    public const string PLAYER_SWORD_TAG = "PlayerSword";
+
+    #endregion
+
     public const string HORIZONTAL_AXIS = "Horizontal";
     public const string VERTICAL_AXIS = "Vertical";
     public const string JUMP_BUTTON = "Jump";

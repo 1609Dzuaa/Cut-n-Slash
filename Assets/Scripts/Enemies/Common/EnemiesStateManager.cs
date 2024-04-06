@@ -65,9 +65,33 @@ public class EnemiesStateManager : CharactersStateManager
         DrawRayDetectPlayer();
     }
 
+    public override void ChangeState(CharacterBaseState state)
+    {
+        if (_state is EnemiesGetHitState && state is EnemiesGetHitState)
+            return;
+
+        _state.ExitState();
+        _state = state;
+        _state.EnterState(this);
+    }
+
     protected virtual void OnCollisionEnter2D(Collision2D collision) { }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collision) { }
+    protected virtual void OnTriggerEnter2D(Collider2D collision) 
+    {
+        if (collision.CompareTag(GameConstants.PLAYER_SWORD_TAG))
+        {
+            ChangeState(_getHitState);
+        }
+    }
+
+    protected virtual void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag(GameConstants.PLAYER_SWORD_TAG))
+        {
+            ChangeState(_getHitState);
+        }
+    }
 
     protected virtual void DetectPlayer()
     {

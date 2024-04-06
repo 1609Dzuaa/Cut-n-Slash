@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemiesIdleState : CharacterBaseState
+public class EnemiesIdleState : EnemiesBaseState
 {
-    protected EnemiesStateManager _enemiesSM;
     protected float _entryTime;
     protected bool _hasTriggeredAttack;
 
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
-        _enemiesSM = (EnemiesStateManager)_charactersSM;
         _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Idle);
         _enemiesSM.GetRigidbody2D.velocity = Vector2.zero;
         _entryTime = Time.time;
@@ -32,6 +30,7 @@ public class EnemiesIdleState : CharacterBaseState
         }
         else if (CheckIfCanPatrol())
             _enemiesSM.ChangeState(_enemiesSM.GetPatrolState());
+        Debug.Log("IDLE Update");
     }
 
     protected virtual bool CheckIfCanPatrol()

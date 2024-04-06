@@ -26,6 +26,10 @@ public class PlayerIdleState : PlayerBaseState
             _playerSM.ChangeState(_playerSM.JumpState);
         else if (CheckIfCanFall())
             _playerSM.ChangeState(_playerSM.FallState);
+        else if (CheckIfCanAttack3())
+            _playerSM.ChangeState(_playerSM.Attack3State);
+        else if (CheckIfCanAttack2())
+            _playerSM.ChangeState(_playerSM.Attack2State);
         else if (CheckIfCanAttack1())
             _playerSM.ChangeState(_playerSM.Attack1State);
     }
@@ -50,6 +54,22 @@ public class PlayerIdleState : PlayerBaseState
     private bool CheckIfCanAttack1()
     {
         return /*Input.GetMouseButtonDown(0)*/ Input.GetKeyDown(KeyCode.E) && _playerSM.IsOnGround;
+    }
+
+    private bool CheckIfCanAttack2()
+    {
+        float enableTime = _playerSM.EnableComboTime;
+        float AtkEntryTime = _playerSM.Attack1State.EntryTime;
+
+        return Input.GetKeyDown(KeyCode.E) && AtkEntryTime != 0 && Time.time - AtkEntryTime <= enableTime;
+    }
+
+    private bool CheckIfCanAttack3()
+    {
+        float enableTime = _playerSM.EnableComboTime;
+        float AtkEntryTime = _playerSM.Attack2State.EntryTime;
+
+        return Input.GetKeyDown(KeyCode.E) && AtkEntryTime != 0 && Time.time - AtkEntryTime <= enableTime;
     }
 
     public override void FixedUpdate()

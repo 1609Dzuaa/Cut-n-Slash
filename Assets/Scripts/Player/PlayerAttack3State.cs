@@ -8,6 +8,7 @@ public class PlayerAttack3State : PlayerBaseState
     {
         base.EnterState(charactersSM);
         _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Attack3);
+        _playerSM.Attack2State.EntryTime = 0;
         Debug.Log("Atk3");
     }
 

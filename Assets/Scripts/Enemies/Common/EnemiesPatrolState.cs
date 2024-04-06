@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemiesPatrolState : CharacterBaseState
+public class EnemiesPatrolState : EnemiesBaseState
 {
-    protected EnemiesStateManager _enemiesSM;
     protected float _entryTime;
     protected bool _hasTriggeredAttack;
 
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
-        _enemiesSM = (EnemiesStateManager)_charactersSM;
         _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Patrol);
         _entryTime = Time.time;
         Debug.Log("Patrol");

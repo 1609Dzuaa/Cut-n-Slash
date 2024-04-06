@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class PlayerAttack1State : PlayerBaseState
 {
+    private float _entryTime;
+
+    public float EntryTime { get => _entryTime; set => _entryTime = value; }
+
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
         _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Attack1);
         _playerSM.StartCoroutine(_playerSM.BackToIdle());
+        _entryTime = Time.time;
         Debug.Log("Atk1");
     }
 

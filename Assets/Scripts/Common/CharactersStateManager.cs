@@ -29,7 +29,7 @@ public class CharactersStateManager : GameObjectController
 
     protected virtual void FixedUpdate() { if (_state != null) _state.FixedUpdate(); }
 
-    public void ChangeState(CharacterBaseState state)
+    public virtual void ChangeState(CharacterBaseState state)
     {
         _state.ExitState();
         _state = state;

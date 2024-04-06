@@ -22,6 +22,9 @@ public class PlayerStateManager : CharactersStateManager
     [SerializeField, Tooltip("Khoảng thời gian" +
         "trở về Idle sau khi không click combo tiếp")] 
     float _delayBackToIdle;
+    [SerializeField, Tooltip("Khoảng thời gian" +
+        "ngắn cho phép Player thi triển combo tiếp theo")]
+    float _enableComboTime;
 
     #region Player's States
 
@@ -83,7 +86,7 @@ public class PlayerStateManager : CharactersStateManager
 
     public float GravScale { get => _gravScale; }
 
-    public float DelayBackToIdle { get => _delayBackToIdle; }
+    public float EnableComboTime { get => _enableComboTime; }
 
     #endregion
 
@@ -168,11 +171,19 @@ public class PlayerStateManager : CharactersStateManager
             Gizmos.DrawLine(_wallCheck.position, new Vector3(_wallCheck.position.x - _wallCheckDistance, _wallCheck.position.y, _wallCheck.position.z));
     }
 
-    //Trở về state Idle khi 0 tiếp tục combo || khi đã max combo (Atk3State)
+    //Start Coroutine khi ở đang ở Attack1 || Attack2
+    //Để trở về state Idle khi 0 tiếp tục combo
     public IEnumerator BackToIdle()
     {
         yield return new WaitForSeconds(_delayBackToIdle);
 
+        ChangeState(_idleState);
+    }
+
+    //Event của Animation Attack 3
+    //Đặt ở cuối Frame
+    private void AnimEventBackToIdle()
+    {
         ChangeState(_idleState);
     }
 }

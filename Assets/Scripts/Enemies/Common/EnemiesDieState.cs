@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemiesDieState : CharacterBaseState
+public class EnemiesDieState : EnemiesBaseState
 {
     public override void EnterState(CharactersStateManager charactersSM)
     {
