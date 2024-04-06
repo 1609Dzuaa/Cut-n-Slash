@@ -8,6 +8,8 @@ public class PlayerAttack2State : PlayerBaseState
     {
         base.EnterState(charactersSM);
         _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Attack2);
+        _playerSM.StopAllCoroutines();
+        _playerSM.StartCoroutine(_playerSM.BackToIdle());
         Debug.Log("Atk2");
     }
 
@@ -20,18 +22,11 @@ public class PlayerAttack2State : PlayerBaseState
     {
         if (CheckIfCanAttack3())
             _playerSM.ChangeState(_playerSM.Attack3State);
-        else if (CheckIfCanIdle())
-            _playerSM.ChangeState(_playerSM.IdleState);
     }
 
     private bool CheckIfCanAttack3()
     {
-        return Input.GetMouseButtonDown(0) && _playerSM.IsOnGround;
-    }
-
-    private bool CheckIfCanIdle()
-    {
-        return _playerSM.DirX == 0 && _playerSM.IsOnGround && !Input.GetMouseButtonDown(0);
+        return /*Input.GetMouseButtonDown(0)*/ Input.GetKeyDown(KeyCode.E) && _playerSM.IsOnGround;
     }
 
     public override void FixedUpdate()

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +22,8 @@ public class PlayerWalkState : PlayerBaseState
             _playerSM.ChangeState(_playerSM.IdleState);
         else if (CheckIfCanJump())
             _playerSM.ChangeState(_playerSM.JumpState);
+        else if (CheckIfCanFall())
+            _playerSM.ChangeState(_playerSM.FallState);
     }
 
     private bool CheckIfCanIdle()
@@ -32,6 +34,11 @@ public class PlayerWalkState : PlayerBaseState
     private bool CheckIfCanJump()
     {
         return Input.GetButtonDown(GameConstants.JUMP_BUTTON) && _playerSM.IsOnGround;
+    }
+
+    private bool CheckIfCanFall()
+    {
+        return !_playerSM.IsOnGround && !Input.GetButtonDown(GameConstants.JUMP_BUTTON);
     }
 
     public override void FixedUpdate()

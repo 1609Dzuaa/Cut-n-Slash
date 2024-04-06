@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,14 +7,16 @@ public class PlayerJumpState : PlayerBaseState
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
-        _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Jump);
-
         //Jump
         float xVelo = _playerSM.GetRigidbody2D.velocity.x;
         float yVelo = _playerSM.JumpForce;
         _playerSM.GetRigidbody2D.velocity = new(xVelo, yVelo);
 
-        Debug.Log("Jump");
+        //Để false thẳng luôn vì nếu để _isOG thì lực Jump 0 đủ mạnh dẫn đến vẫn đang OG
+        _playerSM.GetAnim.SetBool(GameConstants.ANIM_PARA_ON_GROUND, false);
+        _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Jump);
+
+        //Debug.Log("Jump" + _playerSM.IsOnGround);
     }
 
     public override void ExitState()

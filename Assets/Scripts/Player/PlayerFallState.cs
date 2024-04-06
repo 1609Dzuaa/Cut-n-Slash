@@ -8,13 +8,15 @@ public class PlayerFallState : PlayerBaseState
     {
         base.EnterState(charactersSM);
         _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Fall);
+        _playerSM.GetAnim.SetBool(GameConstants.ANIM_PARA_ON_GROUND, _playerSM.IsOnGround);
         _playerSM.GetRigidbody2D.gravityScale = _playerSM.GravScale;
-        Debug.Log("Fall");
+        Debug.Log("Fall " + _playerSM.IsOnGround);
     }
 
     public override void ExitState()
     {
         _playerSM.GetRigidbody2D.gravityScale = GameConstants.PLAYER_DEFAULT_GRAV;
+        //_playerSM.GetAnim.SetBool(GameConstants.ANIM_PARA_ON_GROUND, _playerSM.IsOnGround);
     }
 
     public override void UpdateState()

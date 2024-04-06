@@ -16,16 +16,7 @@ public class PlayerAttack3State : PlayerBaseState
         base.ExitState();
     }
 
-    public override void UpdateState()
-    {
-        if (CheckIfCanIdle())
-            _playerSM.ChangeState(_playerSM.IdleState);
-    }
-
-    private bool CheckIfCanIdle()
-    {
-        return _playerSM.DirX == 0 && _playerSM.IsOnGround && !Input.GetMouseButtonDown(0);
-    }
+    public override void UpdateState() { }
 
     public override void FixedUpdate()
     {

@@ -18,6 +18,11 @@ public class PlayerStateManager : CharactersStateManager
     [SerializeField] float _jumpForce;
     [SerializeField] float _gravScale;
 
+    [Header("Time")]
+    [SerializeField, Tooltip("Khoảng thời gian" +
+        "trở về Idle sau khi không click combo tiếp")] 
+    float _delayBackToIdle;
+
     #region Player's States
 
     PlayerIdleState _idleState = new();
@@ -38,7 +43,7 @@ public class PlayerStateManager : CharactersStateManager
     bool _canJump;
     bool _isWallTouch;
     RaycastHit2D _isWallHit;
-    float _dirX;
+    float _dirX, _dirY;
 
     #endregion
 
@@ -72,9 +77,13 @@ public class PlayerStateManager : CharactersStateManager
 
     public float DirX { get => _dirX; }
 
+    public float DirY { get => _dirY; }
+
     public float JumpForce { get => _jumpForce; }
 
     public float GravScale { get => _gravScale; }
+
+    public float DelayBackToIdle { get => _delayBackToIdle; }
 
     #endregion
 
@@ -105,6 +114,7 @@ public class PlayerStateManager : CharactersStateManager
         HandleInput();
         HandleFlipSprite();
         GroundAndWallCheck();
+        //Debug.Log("IsOG: " + _isOnGround);
     }
 
     protected override void FixedUpdate()
@@ -116,6 +126,7 @@ public class PlayerStateManager : CharactersStateManager
     {
         //if (_hasWinGame) return;
         _dirX = Input.GetAxisRaw(GameConstants.HORIZONTAL_AXIS);
+        _dirY = Input.GetAxisRaw(GameConstants.VERTICAL_AXIS);
     }
 
     private void HandleFlipSprite()
@@ -155,5 +166,13 @@ public class PlayerStateManager : CharactersStateManager
             Gizmos.DrawLine(_wallCheck.position, new Vector3(_wallCheck.position.x + _wallCheckDistance, _wallCheck.position.y, _wallCheck.position.z));
         else
             Gizmos.DrawLine(_wallCheck.position, new Vector3(_wallCheck.position.x - _wallCheckDistance, _wallCheck.position.y, _wallCheck.position.z));
+    }
+
+    //Trở về state Idle khi 0 tiếp tục combo || khi đã max combo (Atk3State)
+    public IEnumerator BackToIdle()
+    {
+        yield return new WaitForSeconds(_delayBackToIdle);
+
+        ChangeState(_idleState);
     }
 }
