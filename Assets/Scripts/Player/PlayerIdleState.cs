@@ -24,6 +24,8 @@ public class PlayerIdleState : PlayerBaseState
             _playerSM.ChangeState(_playerSM.WalkState);
         else if (CheckIfCanJump())
             _playerSM.ChangeState(_playerSM.JumpState);
+        else if (CheckIfCanDash())
+            _playerSM.ChangeState(_playerSM.DashState);
         else if (CheckIfCanFall())
             _playerSM.ChangeState(_playerSM.FallState);
         else if (CheckIfCanAttack(_playerSM.Attack2State.EntryTime, false))
@@ -55,13 +57,18 @@ public class PlayerIdleState : PlayerBaseState
     {
         //First Atk bị block ở đây
         if (isFirstAtk)
-            return Input.GetKeyDown(KeyCode.E) && _playerSM.IsOnGround;
+            return Input.GetMouseButtonDown(0) && _playerSM.IsOnGround;
 
         float enableTime = _playerSM.EnableComboTime;
 
-        return Input.GetKeyDown(KeyCode.E) && AtkEntryTime != 0 
+        return Input.GetMouseButtonDown(0) && AtkEntryTime != 0 
             && Time.time - AtkEntryTime <= enableTime
             && _playerSM.IsOnGround;
+    }
+
+    private bool CheckIfCanDash()
+    {
+        return Input.GetKeyDown(KeyCode.E);
     }
 
     public override void FixedUpdate()

@@ -14,6 +14,8 @@ public static class GameEnums
         Attack1 = 5,
         Attack2 = 6,
         Attack3 = 7,
+        Dash = 8,
+
     }
 
     //Dùng chung
@@ -23,5 +25,10 @@ public static class GameEnums
     public enum EArcherState
     { Idle, Patrol, Withdrawn, Attack, GetHit, Die }
 
-
+    public enum EEvents
+    {
+        None = 0,
+        EnemiesOnReceiveDamage = 1,
+        PlayerOnReceiveDamage = 2,
+    }
 }

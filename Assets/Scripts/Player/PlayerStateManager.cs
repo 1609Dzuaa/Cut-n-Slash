@@ -16,6 +16,7 @@ public class PlayerStateManager : CharactersStateManager
     [SerializeField] float _walkSpeed;
     [SerializeField] float _runSpeed;
     [SerializeField] float _jumpForce;
+    [SerializeField] float _dashSpeed;
     [SerializeField] float _gravScale;
 
     [Header("Time")]
@@ -28,7 +29,8 @@ public class PlayerStateManager : CharactersStateManager
     [SerializeField, Tooltip("Khoảng thgian delay Update" +
         " khi đang ở AttackState")] 
     //Mục đích để ngăn chuyển state để chạy hết anim tránh bị loạn
-    float _delayAttackUpdate;
+    float _delayUpdateAttack;
+    [SerializeField] float _delayUpdateDash; //Tương tự như trên
 
     #region Player's States
 
@@ -40,6 +42,7 @@ public class PlayerStateManager : CharactersStateManager
     PlayerAttack1State _attack1State = new();
     PlayerAttack2State _attack2State = new();
     PlayerAttack3State _attack3State = new();
+    PlayerDashState _dashState = new();
 
     #endregion
 
@@ -72,6 +75,8 @@ public class PlayerStateManager : CharactersStateManager
 
     public PlayerAttack3State Attack3State { get => _attack3State; set => _attack3State = value; }
 
+    public PlayerDashState DashState { get => _dashState; set => _dashState = value; }
+
     #endregion
 
     #region Public Field Properties
@@ -88,11 +93,15 @@ public class PlayerStateManager : CharactersStateManager
 
     public float JumpForce { get => _jumpForce; }
 
+    public float DashSpeed { get => _dashSpeed; }
+
     public float GravScale { get => _gravScale; }
 
     public float EnableComboTime { get => _enableComboTime; }
 
-    public float DelayUpdateAttack { get => _delayAttackUpdate; }
+    public float DelayUpdateAttack { get => _delayUpdateAttack; }
+
+    public float DelayUpdateDash { get=> _delayUpdateDash; }
 
     #endregion
 
@@ -192,4 +201,5 @@ public class PlayerStateManager : CharactersStateManager
     {
         ChangeState(_idleState);
     }
+
 }
