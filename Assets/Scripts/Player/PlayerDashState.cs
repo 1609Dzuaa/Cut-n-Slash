@@ -6,6 +6,8 @@ public class PlayerDashState : PlayerBaseState
 {
     private float _entryTime;
 
+    public float EntryTime { get => _entryTime; }
+
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
@@ -15,11 +17,11 @@ public class PlayerDashState : PlayerBaseState
         Debug.Log("Dash");
     }
 
-    public override void ExitState() { _entryTime = 0; }
+    public override void ExitState() { }
 
     public override void UpdateState()
     {
-        if (Time.time - _entryTime >= _playerSM.DelayUpdateDash && _entryTime != 0)
+        if (Time.time - _entryTime >= _playerSM.DelayUpdateDash)
         {
             //Trả grav về lại như cũ sau khi cho phép Update
             _playerSM.GetRigidbody2D.gravityScale = GameConstants.PLAYER_DEFAULT_GRAV;

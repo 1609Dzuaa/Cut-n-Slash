@@ -23,6 +23,8 @@ public class PlayerFallState : PlayerBaseState
     {
         if (CheckIfCanIdle())
             _playerSM.ChangeState(_playerSM.IdleState);
+        else if (CheckIfCanDash())
+            _playerSM.ChangeState(_playerSM.DashState);
     }
 
     private bool CheckIfCanIdle()
@@ -31,6 +33,12 @@ public class PlayerFallState : PlayerBaseState
         return Mathf.Abs(_playerSM.GetRigidbody2D.velocity.x) < GameConstants.NEAR_ZERO_THRESHOLD
             && Mathf.Abs(_playerSM.GetRigidbody2D.velocity.y) < GameConstants.NEAR_ZERO_THRESHOLD
             && _playerSM.IsOnGround;
+    }
+
+    private bool CheckIfCanDash()
+    {
+        float dashEntryTime = _playerSM.DashState.EntryTime;
+        return Input.GetKeyDown(KeyCode.E) && Time.time - dashEntryTime >= _playerSM.DashDelay;
     }
 
     public override void FixedUpdate()

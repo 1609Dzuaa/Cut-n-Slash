@@ -28,6 +28,14 @@ public class PlayerJumpState : PlayerBaseState
     {
         if (CheckIfCanFall())
             _playerSM.ChangeState(_playerSM.FallState);
+        else if (CheckIfCanDash())
+            _playerSM.ChangeState(_playerSM.DashState);
+    }
+
+    private bool CheckIfCanDash()
+    {
+        float dashEntryTime = _playerSM.DashState.EntryTime;
+        return Input.GetKeyDown(KeyCode.E) && Time.time - dashEntryTime >= _playerSM.DashDelay;
     }
 
     private bool CheckIfCanFall()

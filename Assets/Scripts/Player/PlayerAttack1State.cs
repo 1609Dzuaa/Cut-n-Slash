@@ -17,23 +17,26 @@ public class PlayerAttack1State : PlayerBaseState
         Debug.Log("Atk1");
     }
 
-    public override void ExitState() { _entryTime = 0; }
+    public override void ExitState() { }
 
     public override void UpdateState()
     {
-        if (Time.time - _entryTime >= _playerSM.DelayUpdateAttack && _entryTime != 0)
+        /*if (Time.time - _entryTime >= _playerSM.DelayUpdateAttack)
             if (CheckIfCanAttack2())
-                _playerSM.ChangeState(_playerSM.Attack2State);
+                _playerSM.ChangeState(_playerSM.Attack2State);*/
     }
 
     private bool CheckIfCanAttack2()
     {
-        return /*Input.GetMouseButtonDown(0)*/ Input.GetKeyDown(KeyCode.E) && _playerSM.IsOnGround;
+        return Input.GetMouseButtonDown(0) && _playerSM.IsOnGround;
     }
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
+        if (_playerSM.IsFacingRight)
+            _playerSM.GetRigidbody2D.velocity = new Vector2(_playerSM.MoveSpeedWhileAttack, 0f);
+        else
+            _playerSM.GetRigidbody2D.velocity = new Vector2(-_playerSM.MoveSpeedWhileAttack, 0f);
     }
 
 }

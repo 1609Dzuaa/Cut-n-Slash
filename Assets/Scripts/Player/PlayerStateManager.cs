@@ -18,6 +18,8 @@ public class PlayerStateManager : CharactersStateManager
     [SerializeField] float _jumpForce;
     [SerializeField] float _dashSpeed;
     [SerializeField] float _gravScale;
+    [SerializeField, Tooltip("Bơm cho Player " +
+        "vận tốc nhỏ khi Attack")] float _moveSpeedWhileAttack;
 
     [Header("Time")]
     [SerializeField, Tooltip("Khoảng thời gian" +
@@ -27,10 +29,13 @@ public class PlayerStateManager : CharactersStateManager
         "ngắn cho phép Player thi triển combo tiếp theo")]
     float _enableComboTime;
     [SerializeField, Tooltip("Khoảng thgian delay Update" +
-        " khi đang ở AttackState")] 
+        " khi đang ở AttackState")]
     //Mục đích để ngăn chuyển state để chạy hết anim tránh bị loạn
-    float _delayUpdateAttack;
+    //Ý tưởng Attack là: Atk1->Idle->Atk2->Idle->Atk3->Idle
+    //Với khoảng thgian Idle là rất nhỏ
+    float _delayUpdateAttack; //thừa, xem xét bỏ ?
     [SerializeField] float _delayUpdateDash; //Tương tự như trên
+    [SerializeField] float _dashDelay;
 
     #region Player's States
 
@@ -99,9 +104,14 @@ public class PlayerStateManager : CharactersStateManager
 
     public float EnableComboTime { get => _enableComboTime; }
 
+    //thừa ?
     public float DelayUpdateAttack { get => _delayUpdateAttack; }
 
     public float DelayUpdateDash { get=> _delayUpdateDash; }
+
+    public float DashDelay { get => _dashDelay; }
+
+    public float MoveSpeedWhileAttack { get => _moveSpeedWhileAttack; }
 
     #endregion
 

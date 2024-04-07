@@ -68,7 +68,8 @@ public class PlayerIdleState : PlayerBaseState
 
     private bool CheckIfCanDash()
     {
-        return Input.GetKeyDown(KeyCode.E);
+        float dashEntryTime = _playerSM.DashState.EntryTime;
+        return Input.GetKeyDown(KeyCode.E) && Time.time - dashEntryTime >= _playerSM.DashDelay;
     }
 
     public override void FixedUpdate()

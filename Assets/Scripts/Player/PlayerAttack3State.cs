@@ -21,7 +21,10 @@ public class PlayerAttack3State : PlayerBaseState
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
+        if (_playerSM.IsFacingRight)
+            _playerSM.GetRigidbody2D.velocity = new Vector2(_playerSM.MoveSpeedWhileAttack, 0f);
+        else
+            _playerSM.GetRigidbody2D.velocity = new Vector2(-_playerSM.MoveSpeedWhileAttack, 0f);
     }
 
 }
