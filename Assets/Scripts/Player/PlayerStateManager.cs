@@ -25,6 +25,10 @@ public class PlayerStateManager : CharactersStateManager
     [SerializeField, Tooltip("Khoảng thời gian" +
         "ngắn cho phép Player thi triển combo tiếp theo")]
     float _enableComboTime;
+    [SerializeField, Tooltip("Khoảng thgian delay Update" +
+        " khi đang ở AttackState")] 
+    //Mục đích để ngăn chuyển state để chạy hết anim tránh bị loạn
+    float _delayAttackUpdate;
 
     #region Player's States
 
@@ -87,6 +91,8 @@ public class PlayerStateManager : CharactersStateManager
     public float GravScale { get => _gravScale; }
 
     public float EnableComboTime { get => _enableComboTime; }
+
+    public float DelayUpdateAttack { get => _delayAttackUpdate; }
 
     #endregion
 

@@ -623,6 +623,7 @@ MonoBehaviour:
   _gravScale: 4.5
   _delayBackToIdle: 0.4
   _enableComboTime: 1.3
+  _delayAttackUpdate: 0.42
 --- !u!50 &727356918
 Rigidbody2D:
   serializedVersion: 4

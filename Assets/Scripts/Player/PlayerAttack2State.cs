@@ -19,15 +19,14 @@ public class PlayerAttack2State : PlayerBaseState
         Debug.Log("Atk2");
     }
 
-    public override void ExitState()
-    {
-        base.ExitState();
-    }
+    public override void ExitState() { }
 
     public override void UpdateState()
     {
-        if (CheckIfCanAttack3())
-            _playerSM.ChangeState(_playerSM.Attack3State);
+        //Prob here
+        if (Time.time - _entryTime >= _playerSM.DelayUpdateAttack)
+            if (CheckIfCanAttack3())
+                _playerSM.ChangeState(_playerSM.Attack3State);
     }
 
     private bool CheckIfCanAttack3()

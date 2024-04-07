@@ -26,11 +26,11 @@ public class PlayerIdleState : PlayerBaseState
             _playerSM.ChangeState(_playerSM.JumpState);
         else if (CheckIfCanFall())
             _playerSM.ChangeState(_playerSM.FallState);
-        else if (CheckIfCanAttack3())
+        else if (CheckIfCanAttack(_playerSM.Attack2State.EntryTime, false))
             _playerSM.ChangeState(_playerSM.Attack3State);
-        else if (CheckIfCanAttack2())
+        else if (CheckIfCanAttack(_playerSM.Attack1State.EntryTime, false))
             _playerSM.ChangeState(_playerSM.Attack2State);
-        else if (CheckIfCanAttack1())
+        else if (CheckIfCanAttack(0, true))
             _playerSM.ChangeState(_playerSM.Attack1State);
     }
 
@@ -51,25 +51,17 @@ public class PlayerIdleState : PlayerBaseState
         //tác dụng lực vào đẩy rơi xuống dưới
     }
 
-    private bool CheckIfCanAttack1()
+    private bool CheckIfCanAttack(float AtkEntryTime, bool isFirstAtk)
     {
-        return /*Input.GetMouseButtonDown(0)*/ Input.GetKeyDown(KeyCode.E) && _playerSM.IsOnGround;
-    }
+        //First Atk bị block ở đây
+        if (isFirstAtk)
+            return Input.GetKeyDown(KeyCode.E) && _playerSM.IsOnGround;
 
-    private bool CheckIfCanAttack2()
-    {
         float enableTime = _playerSM.EnableComboTime;
-        float AtkEntryTime = _playerSM.Attack1State.EntryTime;
 
-        return Input.GetKeyDown(KeyCode.E) && AtkEntryTime != 0 && Time.time - AtkEntryTime <= enableTime;
-    }
-
-    private bool CheckIfCanAttack3()
-    {
-        float enableTime = _playerSM.EnableComboTime;
-        float AtkEntryTime = _playerSM.Attack2State.EntryTime;
-
-        return Input.GetKeyDown(KeyCode.E) && AtkEntryTime != 0 && Time.time - AtkEntryTime <= enableTime;
+        return Input.GetKeyDown(KeyCode.E) && AtkEntryTime != 0 
+            && Time.time - AtkEntryTime <= enableTime
+            && _playerSM.IsOnGround;
     }
 
     public override void FixedUpdate()
