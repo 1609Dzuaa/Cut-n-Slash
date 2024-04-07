@@ -627,6 +627,7 @@ MonoBehaviour:
   _jumpForce: 11
   _dashSpeed: 20
   _gravScale: 4.5
+  _rollSpeed: 11
   _moveSpeedWhileAttack: 1.15
   _delayBackToIdle: 0.4
   _enableComboTime: 1.3

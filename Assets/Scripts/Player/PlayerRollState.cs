@@ -1,0 +1,34 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerRollState : PlayerBaseState
+{
+    public override void EnterState(CharactersStateManager charactersSM)
+    {
+        base.EnterState(charactersSM);
+        _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Roll);
+        //Ở state này điều chỉnh Box Col sao cho nó né đc tên của Archer
+        //Và cho phép Player Roll xuyên qua Enemies (DeadCells's mechanic)
+        //Sử dụng properties bên Animation
+        Debug.Log("Roll");
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+    }
+
+    public override void FixedUpdate()
+    {
+        if (_playerSM.IsFacingRight)
+            _playerSM.GetRigidbody2D.velocity = new Vector2(_playerSM.RollSpeed, 0f);
+        else
+            _playerSM.GetRigidbody2D.velocity = new Vector2(-_playerSM.RollSpeed, 0f);
+    }
+}

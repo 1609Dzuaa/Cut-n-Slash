@@ -22,7 +22,6 @@ public static class GameConstants
 
     public const string STATE_ANIM = "state";
     public const string ANIM_PARA_ON_GROUND = "isOnGround";
-    public const string ANIM_PARA_ATTACKING = "isAttacking";
 
     #endregion
 }

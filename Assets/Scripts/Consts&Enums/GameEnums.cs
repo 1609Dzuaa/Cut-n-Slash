@@ -15,7 +15,8 @@ public static class GameEnums
         Attack2 = 6,
         Attack3 = 7,
         Dash = 8,
-
+        Roll = 9,
+        Land = 10,
     }
 
     //Dùng chung

@@ -21,13 +21,13 @@ public class PlayerFallState : PlayerBaseState
 
     public override void UpdateState()
     {
-        if (CheckIfCanIdle())
-            _playerSM.ChangeState(_playerSM.IdleState);
+        if (CheckIfCanLand())
+            _playerSM.ChangeState(_playerSM.LandingState);
         else if (CheckIfCanDash())
             _playerSM.ChangeState(_playerSM.DashState);
     }
 
-    private bool CheckIfCanIdle()
+    private bool CheckIfCanLand()
     {
         //Nếu vận tốc 2 trục rất nhỏ VÀ đang trên nền thì coi như đang Idle
         return Mathf.Abs(_playerSM.GetRigidbody2D.velocity.x) < GameConstants.NEAR_ZERO_THRESHOLD

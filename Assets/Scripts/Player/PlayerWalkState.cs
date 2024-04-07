@@ -26,6 +26,8 @@ public class PlayerWalkState : PlayerBaseState
             _playerSM.ChangeState(_playerSM.Attack2State);
         else if (CheckIfCanAttack(0, true))
             _playerSM.ChangeState(_playerSM.Attack1State);
+        else if (CheckIfCanRoll())
+            _playerSM.ChangeState(_playerSM.RollState);
         else if (CheckIfCanJump())
             _playerSM.ChangeState(_playerSM.JumpState);
         else if (CheckIfCanFall())
@@ -58,6 +60,11 @@ public class PlayerWalkState : PlayerBaseState
         return Input.GetMouseButtonDown(0) && AtkEntryTime != 0
             && Time.time - AtkEntryTime <= enableTime
             && _playerSM.IsOnGround;
+    }
+
+    private bool CheckIfCanRoll()
+    {
+        return Input.GetKeyDown(KeyCode.LeftControl) && _playerSM.IsOnGround;
     }
 
     public override void FixedUpdate()

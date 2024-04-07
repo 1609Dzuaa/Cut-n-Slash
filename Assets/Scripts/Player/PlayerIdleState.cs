@@ -34,6 +34,8 @@ public class PlayerIdleState : PlayerBaseState
             _playerSM.ChangeState(_playerSM.Attack2State);
         else if (CheckIfCanAttack(0, true))
             _playerSM.ChangeState(_playerSM.Attack1State);
+        else if (CheckIfCanRoll())
+            _playerSM.ChangeState(_playerSM.RollState);
     }
 
     private bool CheckIfCanWalk()
@@ -70,6 +72,11 @@ public class PlayerIdleState : PlayerBaseState
     {
         float dashEntryTime = _playerSM.DashState.EntryTime;
         return Input.GetKeyDown(KeyCode.E) && Time.time - dashEntryTime >= _playerSM.DashDelay;
+    }
+
+    private bool CheckIfCanRoll()
+    {
+        return Input.GetKeyDown(KeyCode.LeftControl) && _playerSM.IsOnGround;
     }
 
     public override void FixedUpdate()

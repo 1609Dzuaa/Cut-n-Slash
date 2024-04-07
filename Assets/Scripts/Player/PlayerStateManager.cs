@@ -18,6 +18,7 @@ public class PlayerStateManager : CharactersStateManager
     [SerializeField] float _jumpForce;
     [SerializeField] float _dashSpeed;
     [SerializeField] float _gravScale;
+    [SerializeField] float _rollSpeed;
     [SerializeField, Tooltip("Bơm cho Player " +
         "vận tốc nhỏ khi Attack")] float _moveSpeedWhileAttack;
 
@@ -48,6 +49,8 @@ public class PlayerStateManager : CharactersStateManager
     PlayerAttack2State _attack2State = new();
     PlayerAttack3State _attack3State = new();
     PlayerDashState _dashState = new();
+    PlayerRollState _rollState = new();
+    PlayerLandingState _landingState = new();
 
     #endregion
 
@@ -82,6 +85,10 @@ public class PlayerStateManager : CharactersStateManager
 
     public PlayerDashState DashState { get => _dashState; set => _dashState = value; }
 
+    public PlayerRollState RollState { get => _rollState; set => _rollState = value; }
+
+    public PlayerLandingState LandingState { get => _landingState; set => _landingState = value; }
+
     #endregion
 
     #region Public Field Properties
@@ -112,6 +119,8 @@ public class PlayerStateManager : CharactersStateManager
     public float DashDelay { get => _dashDelay; }
 
     public float MoveSpeedWhileAttack { get => _moveSpeedWhileAttack; }
+
+    public float RollSpeed { get => _rollSpeed; }
 
     #endregion
 
