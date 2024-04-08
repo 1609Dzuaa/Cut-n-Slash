@@ -10,6 +10,7 @@ public class PlayerRollState : PlayerBaseState
         _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Roll);
         //Ở state này điều chỉnh Box Col sao cho nó né đc tên của Archer
         //Và cho phép Player Roll xuyên qua Enemies (DeadCells's mechanic)
+        //x: 0.3274712; y: -0.7
         //Sử dụng properties bên Animation
         Debug.Log("Roll");
     }

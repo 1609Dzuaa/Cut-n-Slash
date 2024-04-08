@@ -17,14 +17,29 @@ public static class GameEnums
         Dash = 8,
         Roll = 9,
         Land = 10,
+        GetHit = 11,
+        Die = 12,
     }
 
     //Dùng chung
     public enum EEnemiesCommonState
-    { Idle, Patrol, Attack, GetHit, Die }
+    {
+        Idle = 0,
+        Patrol = 1,
+        Attack = 2,
+        GetHit = 3,
+        Die = 4
+    }
 
     public enum EArcherState
-    { Idle, Patrol, Withdrawn, Attack, GetHit, Die }
+    {
+        Idle = 0,
+        Patrol = 1,
+        Withdrawn = 2,
+        Attack = 3,
+        GetHit = 4,
+        Die = 5
+    }
 
     public enum EEvents
     {

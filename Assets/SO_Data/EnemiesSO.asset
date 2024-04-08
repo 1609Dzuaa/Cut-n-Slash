@@ -18,10 +18,11 @@ MonoBehaviour:
   _gwLayer:
     serializedVersion: 2
     m_Bits: 64
-  _playerCheckDistance: 3
+  _playerCheckDistance: 6
   _gwCheckDistance: 1
   _patrolSpeed: 6
   _knockForce: {x: 0, y: 0}
   _attackDelay: 0.315
   _restTime: 1.5
   _patrolTime: 1
+  _delayFlipIfPlayerBackward: 1

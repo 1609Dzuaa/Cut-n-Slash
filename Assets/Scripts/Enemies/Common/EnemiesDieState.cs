@@ -7,6 +7,7 @@ public class EnemiesDieState : EnemiesBaseState
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
+        Debug.Log("Enemies Base Die");
     }
 
     public override void ExitState()

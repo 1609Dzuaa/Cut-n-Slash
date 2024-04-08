@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +6,9 @@ public class EnemiesIdleState : EnemiesBaseState
 {
     protected float _entryTime;
     protected bool _hasTriggeredAttack;
+    protected bool _hasStartedFlip;
+
+    public bool HasStartedFlip { get => _hasStartedFlip; set => _hasStartedFlip = value; }
 
     public override void EnterState(CharactersStateManager charactersSM)
     {
@@ -13,7 +16,7 @@ public class EnemiesIdleState : EnemiesBaseState
         _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Idle);
         _enemiesSM.GetRigidbody2D.velocity = Vector2.zero;
         _entryTime = Time.time;
-        Debug.Log("Idle");
+        Debug.Log("Enemies Base Idle");
     }
 
     public override void ExitState()
@@ -23,19 +26,29 @@ public class EnemiesIdleState : EnemiesBaseState
 
     public override void UpdateState()
     {
-        if (CheckIfCanAttack())
+        if(!_hasStartedFlip)
         {
-            _hasTriggeredAttack = true;
-            _enemiesSM.StartCoroutine(_enemiesSM.TriggerAttack());
+            if (CheckIfCanAttack())
+            {
+                _hasTriggeredAttack = true;
+                _enemiesSM.StartCoroutine(_enemiesSM.TriggerAttack());
+            }
+            else if (CheckIfCanPatrol())
+                _enemiesSM.ChangeState(_enemiesSM.GetPatrolState());
+            else if (_enemiesSM.HasDetectedPlayerBackward)
+            {
+                //Player ở phía sau thì Idle 1 lúc r flip
+                _hasStartedFlip = true;
+                _enemiesSM.StartCoroutine(_enemiesSM.DelayFlip());
+                Debug.Log("Player Backward");
+            }
         }
-        else if (CheckIfCanPatrol())
-            _enemiesSM.ChangeState(_enemiesSM.GetPatrolState());
-        Debug.Log("IDLE Update");
     }
 
     protected virtual bool CheckIfCanPatrol()
     {
-        return Time.time - _entryTime > _enemiesSM.GetEnemiesSO().RestTime;
+        //Coi lại biến hasTriggeredAttack
+        return Time.time - _entryTime > _enemiesSM.GetEnemiesSO().RestTime && !_hasTriggeredAttack;
     }
 
     protected virtual bool CheckIfCanAttack()

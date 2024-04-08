@@ -12,7 +12,7 @@ public class EnemiesAttackState : CharacterBaseState
         _enemiesSM = (EnemiesStateManager)_charactersSM;
         _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Attack);
         _enemiesSM.GetRigidbody2D.velocity = Vector2.zero;
-        Debug.Log("Attack");
+        Debug.Log("Enemies Base Attack");
     }
 
     public override void ExitState()

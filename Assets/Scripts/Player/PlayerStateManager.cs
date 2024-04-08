@@ -35,6 +35,9 @@ public class PlayerStateManager : CharactersStateManager
     //Ý tưởng Attack là: Atk1->Idle->Atk2->Idle->Atk3->Idle
     //Với khoảng thgian Idle là rất nhỏ
     float _delayUpdateAttack; //thừa, xem xét bỏ ?
+    [SerializeField, Tooltip("Khoảng thgian nếu Fall quá lâu" +
+        "sẽ chuyển sang Land thay vì Idle như bthg")]
+    float _timeCanLanding;
     [SerializeField] float _delayUpdateDash; //Tương tự như trên
     [SerializeField] float _dashDelay;
 
@@ -117,6 +120,8 @@ public class PlayerStateManager : CharactersStateManager
     public float DelayUpdateDash { get=> _delayUpdateDash; }
 
     public float DashDelay { get => _dashDelay; }
+
+    public float TimeCanLanding { get => _timeCanLanding; }
 
     public float MoveSpeedWhileAttack { get => _moveSpeedWhileAttack; }
 

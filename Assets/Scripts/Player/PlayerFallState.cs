@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class PlayerFallState : PlayerBaseState
 {
+    float _entryTime;
+
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
         _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Fall);
         _playerSM.GetAnim.SetBool(GameConstants.ANIM_PARA_ON_GROUND, _playerSM.IsOnGround);
         _playerSM.GetRigidbody2D.gravityScale = _playerSM.GravScale;
-        Debug.Log("Fall " + _playerSM.IsOnGround);
+        _entryTime = Time.time;
+        //Debug.Log("Fall " + _playerSM.IsOnGround);
     }
 
     public override void ExitState()
@@ -23,15 +26,26 @@ public class PlayerFallState : PlayerBaseState
     {
         if (CheckIfCanLand())
             _playerSM.ChangeState(_playerSM.LandingState);
+        else if (CheckIfCanIdle())
+            _playerSM.ChangeState(_playerSM.IdleState);
         else if (CheckIfCanDash())
             _playerSM.ChangeState(_playerSM.DashState);
     }
 
-    private bool CheckIfCanLand()
+    private bool CheckIfCanIdle()
     {
         //Nếu vận tốc 2 trục rất nhỏ VÀ đang trên nền thì coi như đang Idle
         return Mathf.Abs(_playerSM.GetRigidbody2D.velocity.x) < GameConstants.NEAR_ZERO_THRESHOLD
             && Mathf.Abs(_playerSM.GetRigidbody2D.velocity.y) < GameConstants.NEAR_ZERO_THRESHOLD
+            && _playerSM.IsOnGround;
+    }
+
+    private bool CheckIfCanLand()
+    {
+        //Sẽ chuyển sang state Land nếu fall quá thời gian TimeCanLanding
+        return Mathf.Abs(_playerSM.GetRigidbody2D.velocity.x) < GameConstants.NEAR_ZERO_THRESHOLD
+            && Mathf.Abs(_playerSM.GetRigidbody2D.velocity.y) < GameConstants.NEAR_ZERO_THRESHOLD
+            && Time.time - _entryTime >= _playerSM.TimeCanLanding
             && _playerSM.IsOnGround;
     }
 

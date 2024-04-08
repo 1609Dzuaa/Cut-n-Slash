@@ -6,23 +6,24 @@ using UnityEngine;
 public class EnemiesSO : ScriptableObject
 {
     [Header("Layers")]
-    [SerializeField] private LayerMask _playerLayer;
-    [SerializeField] private LayerMask _gwLayer;
+    [SerializeField] LayerMask _playerLayer;
+    [SerializeField] LayerMask _gwLayer;
 
     [Header("Check Distance")]
-    [SerializeField] private float _playerCheckDistance;
-    [SerializeField] private float _gwCheckDistance;
+    [SerializeField] float _playerCheckDistance;
+    [SerializeField] float _gwCheckDistance;
 
     [Header("Speed")]
-    [SerializeField] private float _patrolSpeed;
+    [SerializeField] float _patrolSpeed;
 
     [Header("Force")]
-    [SerializeField] private Vector2 _knockForce;
+    [SerializeField] Vector2 _knockForce;
 
     [Header("Time")]
-    [SerializeField] private float _attackDelay;
-    [SerializeField] private float _restTime;
-    [SerializeField] private float _patrolTime;
+    [SerializeField] float _attackDelay;
+    [SerializeField] float _restTime;
+    [SerializeField] float _patrolTime;
+    [SerializeField] float _delayFlipIfPlayerBackward;
 
     public LayerMask PlayerLayer { get { return _playerLayer; } }
 
@@ -41,4 +42,6 @@ public class EnemiesSO : ScriptableObject
     public float RestTime { get { return _restTime;} }
 
     public float PatrolTime { get { return _patrolTime; } }
+
+    public float DelayFlipIfPlayerBackward { get { return _delayFlipIfPlayerBackward; } }
 }

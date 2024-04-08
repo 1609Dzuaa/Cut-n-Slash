@@ -6,6 +6,7 @@ public class EnemiesStateManager : CharactersStateManager
 {
     [Header("Check Properties")]
     [SerializeField] protected Transform _playerCheck;
+    [SerializeField, Tooltip("Check Player ở phía sau")] protected Transform _playerCheck2;
     [SerializeField] protected Transform _groundCheck;
     [SerializeField] protected Transform _wallCheck;
 
@@ -21,7 +22,9 @@ public class EnemiesStateManager : CharactersStateManager
     #endregion
 
     protected RaycastHit2D _pRayHit;
+    protected RaycastHit2D _pRayHit2;
     protected bool _hasDetectedPlayer;
+    protected bool _hasDetectedPlayerBackward;
     protected bool _hasDetectedGround;
     protected bool _hasDetectedWall;
 
@@ -38,6 +41,9 @@ public class EnemiesStateManager : CharactersStateManager
     public EnemiesDieState GetDieState() { return _dieState; }
 
     public bool HasDetectedPlayer { get => _hasDetectedPlayer; }
+
+    public bool HasDetectedPlayerBackward { get => _hasDetectedPlayerBackward; }
+
 
     protected override void Awake()
     {
@@ -63,6 +69,7 @@ public class EnemiesStateManager : CharactersStateManager
         base.Update();
         DetectPlayer();
         DrawRayDetectPlayer();
+        Debug.Log("Front, Back: " + _hasDetectedPlayer + ", " + _hasDetectedPlayerBackward);
     }
 
     public override void ChangeState(CharacterBaseState state)
@@ -103,24 +110,27 @@ public class EnemiesStateManager : CharactersStateManager
 
         //Tạo 1 obj vô hình cùng layer với Player block giữa các wall
         //Phân biệt nó vs Player = Tag
+
         if (!_isFacingRight)
         {
             _pRayHit = Physics2D.Raycast(_playerCheck.position, Vector2.left, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
-
-            if (_pRayHit && _pRayHit.collider.CompareTag(GameConstants.PLAYER_TAG))
-                _hasDetectedPlayer = true;
-            else
-                _hasDetectedPlayer = false;
+            _pRayHit2 = Physics2D.Raycast(_playerCheck2.position, Vector2.right, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
         }
         else
         {
             _pRayHit = Physics2D.Raycast(_playerCheck.position, Vector2.right, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
-
-            if (_pRayHit && _pRayHit.collider.CompareTag(GameConstants.PLAYER_TAG))
-                _hasDetectedPlayer = true;
-            else
-                _hasDetectedPlayer = false;
+            _pRayHit2 = Physics2D.Raycast(_playerCheck2.position, Vector2.left, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
         }
+
+        if (_pRayHit && _pRayHit.collider.CompareTag(GameConstants.PLAYER_TAG))
+            _hasDetectedPlayer = true;
+        else
+            _hasDetectedPlayer = false;
+
+        if (_pRayHit2 && _pRayHit2.collider.CompareTag(GameConstants.PLAYER_TAG))
+            _hasDetectedPlayerBackward = true;
+        else
+            _hasDetectedPlayerBackward = false;
     }
 
     protected virtual void DrawRayDetectPlayer()
@@ -139,6 +149,21 @@ public class EnemiesStateManager : CharactersStateManager
             else
                 Debug.DrawRay(_playerCheck.position, Vector2.right * _enemiesSO.PlayerCheckDistance, Color.green);
         }
+
+        if (_hasDetectedPlayerBackward)
+        {
+            if (!_isFacingRight)
+                Debug.DrawRay(_playerCheck2.position, Vector2.right * _enemiesSO.PlayerCheckDistance, Color.yellow);
+            else
+                Debug.DrawRay(_playerCheck2.position, Vector2.left * _enemiesSO.PlayerCheckDistance, Color.yellow);
+        }
+        else
+        {
+            if (!_isFacingRight)
+                Debug.DrawRay(_playerCheck2.position, Vector2.right * _enemiesSO.PlayerCheckDistance, Color.blue);
+            else
+                Debug.DrawRay(_playerCheck2.position, Vector2.left * _enemiesSO.PlayerCheckDistance, Color.blue);
+        }
     }
 
     protected virtual void SelfDestroy() { Destroy(gameObject); }
@@ -148,6 +173,16 @@ public class EnemiesStateManager : CharactersStateManager
         yield return new WaitForSeconds(_enemiesSO.AttackDelay);
 
         ChangeState(_attackState);
+    }
+
+    public IEnumerator DelayFlip()
+    {
+        yield return new WaitForSeconds(_enemiesSO.DelayFlipIfPlayerBackward);
+
+        FlippingSprite();
+
+        yield return new WaitForSeconds(0.2f);
+        _idleState.HasStartedFlip = false;
     }
 
     //Anim event của Atk

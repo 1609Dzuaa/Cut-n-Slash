@@ -8,7 +8,7 @@ public class EnemiesGetHitState : EnemiesBaseState
     {
         base.EnterState(charactersSM);
         _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.GetHit);
-        Debug.Log("E GH");
+        Debug.Log("Enemies Base GH");
     }
 
     public override void ExitState()

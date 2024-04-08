@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class ArcherAttackState : EnemiesAttackState
 {
-    ArcherStateManager _archerSM;
-
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
-        _archerSM = (ArcherStateManager)_charactersSM;
-        _archerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EArcherState.Attack);
-        _archerSM.GetRigidbody2D.velocity = Vector2.zero;
+        _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EArcherState.Attack);
+        _enemiesSM.GetRigidbody2D.velocity = Vector2.zero;
         Debug.Log("Archer Atk");
 
         /*

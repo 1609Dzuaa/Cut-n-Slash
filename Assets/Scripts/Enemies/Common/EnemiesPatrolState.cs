@@ -12,7 +12,7 @@ public class EnemiesPatrolState : EnemiesBaseState
         base.EnterState(charactersSM);
         _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Patrol);
         _entryTime = Time.time;
-        Debug.Log("Patrol");
+        Debug.Log("Enemies Base Patrol");
     }
 
     public override void ExitState()

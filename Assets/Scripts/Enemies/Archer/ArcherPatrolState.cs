@@ -9,9 +9,8 @@ public class ArcherPatrolState : EnemiesPatrolState
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
-        _enemiesSM = (EnemiesStateManager)_charactersSM;
-        _charactersSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Idle);
-        Debug.Log("Idle");
+        _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Patrol);
+        Debug.Log("Pt");
     }
 
     public override void ExitState()
@@ -21,14 +20,8 @@ public class ArcherPatrolState : EnemiesPatrolState
 
     public override void UpdateState()
     {
-        //if (CheckIfCanAttack())
-        //_enemiesSM.ChangeState(_enemiesSM.GetAttackState());
+        base.UpdateState();
     }
-
-    /*protected virtual bool CheckIfCanAttack()
-    {
-        return _enemiesSM.HasDetectedPlayer;
-    }*/
 
     public override void FixedUpdate()
     {

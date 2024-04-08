@@ -9,7 +9,7 @@ public class ArcherWithdrawnState : CharacterBaseState
     public override void EnterState(CharactersStateManager charactersSM)
     {
         _archerSM = (ArcherStateManager)charactersSM;
-        _archerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Idle);
+        _archerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EArcherState.Withdrawn);
         if (_archerSM.IsFacingRight)
             _archerSM.GetRigidbody2D.velocity = _archerSM.WithdrawnForce * new Vector2(-1f, 1f);
         else

@@ -25,9 +25,9 @@ public class CharactersStateManager : GameObjectController
         _rb = GetComponent<Rigidbody2D>();
     }
 
-    protected override void Update() { if (_state != null) _state.UpdateState(); }
+    protected override void Update() { _state?.UpdateState(); }
 
-    protected virtual void FixedUpdate() { if (_state != null) _state.FixedUpdate(); }
+    protected virtual void FixedUpdate() { _state?.FixedUpdate(); }
 
     public virtual void ChangeState(CharacterBaseState state)
     {
