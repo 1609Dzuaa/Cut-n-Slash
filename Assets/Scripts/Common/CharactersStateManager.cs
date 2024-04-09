@@ -30,9 +30,4 @@ public class CharactersStateManager : GameObjectController
         _state.EnterState(this);
     }
 
-    public void FlippingSprite()
-    {
-        _isFacingRight = !_isFacingRight;
-        transform.Rotate(0, 180, 0);
-    }
 }

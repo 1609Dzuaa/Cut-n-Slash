@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using static GameEnums;
+using static GameConstants;
 
 public class PlayerStateManager : CharactersStateManager
 {
@@ -54,6 +55,7 @@ public class PlayerStateManager : CharactersStateManager
     PlayerDashState _dashState = new();
     PlayerRollState _rollState = new();
     PlayerLandingState _landingState = new();
+    PlayerGetHitState _getHitState = new();
 
     #endregion
 
@@ -159,6 +161,19 @@ public class PlayerStateManager : CharactersStateManager
         //Debug.Log("IsOG: " + _isOnGround);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag(TRAP_TAG))
+        {
+            ChangeState(_getHitState);
+            //Lấy vị trí va chạm
+            ContactPoint2D contacts = collision.GetContact(0);
+            GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
+            bloodVfx.SetActive(true);
+            bloodVfx.transform.position = contacts.point;
+        }
+    }
+
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -167,8 +182,8 @@ public class PlayerStateManager : CharactersStateManager
     private void HandleInput()
     {
         //if (_hasWinGame) return;
-        _dirX = Input.GetAxisRaw(GameConstants.HORIZONTAL_AXIS);
-        _dirY = Input.GetAxisRaw(GameConstants.VERTICAL_AXIS);
+        _dirX = Input.GetAxisRaw(HORIZONTAL_AXIS);
+        _dirY = Input.GetAxisRaw(VERTICAL_AXIS);
     }
 
     private void HandleFlipSprite()

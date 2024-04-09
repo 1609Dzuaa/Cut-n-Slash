@@ -41,11 +41,14 @@ public static class GameEnums
         None = 0,
         EnemiesOnReceiveDamage = 1,
         PlayerOnReceiveDamage = 2,
+        ArrowOnReceiveInfor = 3,
+
     }
 
     public enum EPoolable
     {
         ArcherArrow = 1,
+        BloodVfx = 2,
 
     }
 

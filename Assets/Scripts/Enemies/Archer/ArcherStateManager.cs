@@ -69,8 +69,6 @@ public class ArcherStateManager : EnemiesStateManager
     private void OnDrawGizmos()
     {
         Gizmos.DrawCube(transform.position, _withdrawnableRange);
-        //Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + _withdrawnableRange, transform.position.y, transform.position.z));
-        //Gizmos.DrawLine(transform.position, new Vector3(transform.position.x - _withdrawnableRange, transform.position.y, transform.position.z));
     }
 
     private void SpawnArrow()
@@ -78,6 +76,10 @@ public class ArcherStateManager : EnemiesStateManager
         GameObject archerArrow = PoolManager.Instance.GetObjectInPool(EPoolable.ArcherArrow);
         archerArrow.SetActive(true);
         archerArrow.transform.position = _shootPos.position;
+
+        string id = archerArrow.GetComponent<ArrowController>().ID;
+        ArrowInfor info = new(id, _shootPos.position, _isFacingRight);
+        EventsManager.Instance.NotifyObservers(EEvents.ArrowOnReceiveInfor, info);
     }
 
 }
