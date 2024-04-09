@@ -33,12 +33,7 @@ public static class GameEnums
 
     public enum EArcherState
     {
-        Idle = 0,
-        Patrol = 1,
-        Withdrawn = 2,
-        Attack = 3,
-        GetHit = 4,
-        Die = 5
+        Withdrawn = 5,
     }
 
     public enum EEvents
@@ -47,4 +42,11 @@ public static class GameEnums
         EnemiesOnReceiveDamage = 1,
         PlayerOnReceiveDamage = 2,
     }
+
+    public enum EPoolable
+    {
+        ArcherArrow = 1,
+
+    }
+
 }

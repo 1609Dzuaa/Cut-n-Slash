@@ -26,7 +26,7 @@ public class EnemiesIdleState : EnemiesBaseState
 
     public override void UpdateState()
     {
-        if(!_hasStartedFlip)
+        if (!_hasStartedFlip)
         {
             if (CheckIfCanAttack())
             {
@@ -53,11 +53,8 @@ public class EnemiesIdleState : EnemiesBaseState
 
     protected virtual bool CheckIfCanAttack()
     {
-        return _enemiesSM.HasDetectedPlayer && !_hasTriggeredAttack;   
+        return _enemiesSM.HasDetectedPlayer && !_hasTriggeredAttack;
     }
 
-    public override void FixedUpdate()
-    {
-        base.FixedUpdate();
-    }
+    public override void FixedUpdate() { }
 }

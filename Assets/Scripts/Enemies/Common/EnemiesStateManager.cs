@@ -172,7 +172,8 @@ public class EnemiesStateManager : CharactersStateManager
     {
         yield return new WaitForSeconds(_enemiesSO.AttackDelay);
 
-        ChangeState(_attackState);
+        //Sau khoảng delay ngắn, nếu vẫn phát hiện Player thì attack, 0 thì về Idle
+        ChangeState((_hasDetectedPlayer) ? _attackState : _idleState);
     }
 
     public IEnumerator DelayFlip()

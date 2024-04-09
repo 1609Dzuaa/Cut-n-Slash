@@ -632,7 +632,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727356913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.03, y: 3.38, z: 0}
+  m_LocalPosition: {x: 5.31, y: -0.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1192,7 +1192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5580269436430855256, guid: 0406c0505f860004c847fdbd31257b83, type: 3}
       propertyPath: _withdrawnableRange.x
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5580269436430855256, guid: 0406c0505f860004c847fdbd31257b83, type: 3}
       propertyPath: _withdrawnableRange.y
@@ -1204,7 +1204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5580269436430855260, guid: 0406c0505f860004c847fdbd31257b83, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.02
+      value: -3.55
       objectReference: {fileID: 0}
     - target: {fileID: 5580269436430855260, guid: 0406c0505f860004c847fdbd31257b83, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1389,6 +1389,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9105244426124095936, guid: 441b47d78267e7b48aec19a74fbde529, type: 3}
+      propertyPath: _listPoolableObj.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9105244426124095936, guid: 441b47d78267e7b48aec19a74fbde529, type: 3}
+      propertyPath: _listPoolableObj.Array.data[0]._ammount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9105244426124095936, guid: 441b47d78267e7b48aec19a74fbde529, type: 3}
+      propertyPath: _listPoolableObj.Array.data[0]._ePoolable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9105244426124095937, guid: 441b47d78267e7b48aec19a74fbde529, type: 3}
       propertyPath: m_RootOrder
       value: 10

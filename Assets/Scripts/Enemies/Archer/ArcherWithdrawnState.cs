@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcherWithdrawnState : CharacterBaseState
+public class ArcherWithdrawnState : EnemiesBaseState
 {
     ArcherStateManager _archerSM;
 
@@ -10,10 +10,7 @@ public class ArcherWithdrawnState : CharacterBaseState
     {
         _archerSM = (ArcherStateManager)charactersSM;
         _archerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EArcherState.Withdrawn);
-        if (_archerSM.IsFacingRight)
-            _archerSM.GetRigidbody2D.velocity = _archerSM.WithdrawnForce * new Vector2(-1f, 1f);
-        else
-            _archerSM.GetRigidbody2D.velocity = _archerSM.WithdrawnForce;
+        HandleWithdrawn();
         Debug.Log("Withdrawn");
     }
 
@@ -24,8 +21,15 @@ public class ArcherWithdrawnState : CharacterBaseState
 
     public override void UpdateState()
     {
-        //if (CheckIfCanAttack())
-        //_enemiesSM.ChangeState(_enemiesSM.GetAttackState());
+        base.UpdateState();
+    }
+
+    private void HandleWithdrawn()
+    {
+        if (_archerSM.IsFacingRight)
+            _archerSM.GetRigidbody2D.velocity = _archerSM.WithdrawnForce * new Vector2(-1f, 1f);
+        else
+            _archerSM.GetRigidbody2D.velocity = _archerSM.WithdrawnForce;
     }
 
     public override void FixedUpdate()

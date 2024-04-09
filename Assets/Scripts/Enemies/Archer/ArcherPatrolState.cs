@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ArcherPatrolState : EnemiesPatrolState
 {
-    //protected EnemiesStateManager _enemiesSM;
+    ArcherStateManager _archerSM;
 
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
-        _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Patrol);
-        Debug.Log("Pt");
+        _archerSM = (ArcherStateManager)_enemiesSM;
+        Debug.Log("Archer Pt");
     }
 
     public override void ExitState()
@@ -20,7 +20,10 @@ public class ArcherPatrolState : EnemiesPatrolState
 
     public override void UpdateState()
     {
-        base.UpdateState();
+        if (_archerSM.WithdrawnCheck() && !_hasStartedFlip)
+            _archerSM.ChangeState(_archerSM.GetArcherWithdrawnState());
+        else
+            base.UpdateState();
     }
 
     public override void FixedUpdate()

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +6,7 @@ public class EnemiesPatrolState : EnemiesBaseState
 {
     protected float _entryTime;
     protected bool _hasTriggeredAttack;
+    protected bool _hasStartedFlip;
 
     public override void EnterState(CharactersStateManager charactersSM)
     {
@@ -17,7 +18,7 @@ public class EnemiesPatrolState : EnemiesBaseState
 
     public override void ExitState()
     {
-        base.ExitState();
+        _hasTriggeredAttack = false;
     }
 
     public override void UpdateState()
@@ -29,6 +30,14 @@ public class EnemiesPatrolState : EnemiesBaseState
         }
         else if (CheckIfCanRest())
             _enemiesSM.ChangeState(_enemiesSM.GetIdleState());
+        else if (_enemiesSM.HasDetectedPlayerBackward)
+        {
+            //Player ở phía sau thì Idle 1 lúc r flip
+            _enemiesSM.ChangeState(_enemiesSM.GetIdleState());
+            _enemiesSM.GetIdleState().HasStartedFlip = true;
+            _enemiesSM.StartCoroutine(_enemiesSM.DelayFlip());
+            Debug.Log("Player Backward");
+        }
     }
 
     protected virtual bool CheckIfCanRest()

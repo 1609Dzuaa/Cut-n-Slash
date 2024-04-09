@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameEnums;
 
 public class ArcherStateManager : EnemiesStateManager
 {
@@ -10,6 +11,8 @@ public class ArcherStateManager : EnemiesStateManager
     [Header("Range"), Tooltip("Khoảng cách mà khi Player ở đủ gần" +
         "thì nó sẽ Withdrawn")]
     [SerializeField] Vector2 _withdrawnableRange;
+
+    [SerializeField] Transform _shootPos;
 
     #region States
 
@@ -68,6 +71,13 @@ public class ArcherStateManager : EnemiesStateManager
         Gizmos.DrawCube(transform.position, _withdrawnableRange);
         //Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + _withdrawnableRange, transform.position.y, transform.position.z));
         //Gizmos.DrawLine(transform.position, new Vector3(transform.position.x - _withdrawnableRange, transform.position.y, transform.position.z));
+    }
+
+    private void SpawnArrow()
+    {
+        GameObject archerArrow = PoolManager.Instance.GetObjectInPool(EPoolable.ArcherArrow);
+        archerArrow.SetActive(true);
+        archerArrow.transform.position = _shootPos.position;
     }
 
 }

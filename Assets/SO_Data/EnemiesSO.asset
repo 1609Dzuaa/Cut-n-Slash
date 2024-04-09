@@ -23,6 +23,6 @@ MonoBehaviour:
   _patrolSpeed: 6
   _knockForce: {x: 0, y: 0}
   _attackDelay: 0.315
-  _restTime: 1.5
-  _patrolTime: 1
-  _delayFlipIfPlayerBackward: 1
+  _restTime: 1
+  _patrolTime: 1.71
+  _delayFlipIfPlayerBackward: 1.3
