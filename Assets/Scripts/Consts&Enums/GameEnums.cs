@@ -37,6 +37,11 @@ public static class GameEnums
         Withdrawn = 5,
     }
 
+    public enum ESkeletonState
+    {
+        Attack2 = 6
+    }
+
     public enum EEvents
     {
         None = 0,

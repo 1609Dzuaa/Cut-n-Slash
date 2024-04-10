@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGetHitState : PlayerBaseState
+public class SkeletonAttack2State : EnemiesAttackState
 {
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
-        _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.GetHit);
-        Debug.Log("P Get Hit");
+        _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.ESkeletonState.Attack2);
+        Debug.Log("Skl Atk2");
     }
 
     public override void ExitState()
     {
-        _playerSM.HasGetHit = false;
+        base.ExitState();
     }
 
     public override void UpdateState()

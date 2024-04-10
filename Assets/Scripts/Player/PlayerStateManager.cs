@@ -63,6 +63,7 @@ public class PlayerStateManager : CharactersStateManager
 
     bool _isOnPlatform;
     bool _isOnGround;
+    bool _hasGetHit;
     bool _canJump;
     bool _isWallTouch;
     RaycastHit2D _isWallHit;
@@ -129,6 +130,8 @@ public class PlayerStateManager : CharactersStateManager
 
     public float RollSpeed { get => _rollSpeed; }
 
+    public bool HasGetHit { get => _hasGetHit; set => _hasGetHit = value; }
+
     #endregion
 
     protected override void Awake()
@@ -158,13 +161,47 @@ public class PlayerStateManager : CharactersStateManager
         HandleInput();
         HandleFlipSprite();
         GroundAndWallCheck();
-        //Debug.Log("IsOG: " + _isOnGround);
+        Debug.Log("hGH: " + _hasGetHit);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag(TRAP_TAG))
             ChangeState(_getHitState);
+        /*else if(collision.collider.CompareTag(ENEMIES_WEAPON_TAG))
+        {
+            GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
+            bloodVfx.SetActive(true);
+            bloodVfx.transform.position = transform.position;
+            ChangeState(_getHitState);
+        }*/
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag(ENEMIES_WEAPON_TAG) && !_hasGetHit)
+        {
+            _hasGetHit = true;
+            //ContactPoint2D contacts = collision.GetContacts(;
+            GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
+            bloodVfx.SetActive(true);
+            bloodVfx.transform.position = transform.position;
+            ChangeState(_getHitState);
+        }
+        Debug.Log("here: " + _hasGetHit);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag(ENEMIES_WEAPON_TAG) && !_hasGetHit)
+        {
+            _hasGetHit = true;
+            GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
+            bloodVfx.SetActive(true);
+            bloodVfx.transform.position = transform.position;
+            ChangeState(_getHitState);
+        }
+        Debug.Log("hereStay: " + _hasGetHit);
     }
 
     protected override void FixedUpdate()

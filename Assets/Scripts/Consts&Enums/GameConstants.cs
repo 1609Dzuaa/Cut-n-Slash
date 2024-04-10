@@ -9,6 +9,7 @@ public static class GameConstants
     public const string PLAYER_TAG = "Player";
     public const string PLAYER_SWORD_TAG = "PlayerSword";
     public const string TRAP_TAG = "Trap";
+    public const string ENEMIES_WEAPON_TAG = "EnemiesWeapon";
 
     #endregion
 
