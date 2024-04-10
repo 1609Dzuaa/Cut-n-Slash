@@ -28,7 +28,8 @@ public static class GameEnums
         Patrol = 1,
         Attack = 2,
         GetHit = 3,
-        Die = 4
+        Die = 4,
+        Chase = 5,
     }
 
     public enum EArcherState

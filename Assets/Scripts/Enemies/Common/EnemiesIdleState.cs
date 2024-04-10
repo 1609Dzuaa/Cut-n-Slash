@@ -33,6 +33,8 @@ public class EnemiesIdleState : EnemiesBaseState
                 _hasTriggeredAttack = true;
                 _enemiesSM.StartCoroutine(_enemiesSM.TriggerAttack());
             }
+            else if (CheckIfCanChase())
+                _enemiesSM.ChangeState(_enemiesSM.GetChaseState());
             else if (CheckIfCanPatrol())
                 _enemiesSM.ChangeState(_enemiesSM.GetPatrolState());
             else if (_enemiesSM.HasDetectedPlayerBackward)
@@ -45,15 +47,24 @@ public class EnemiesIdleState : EnemiesBaseState
         }
     }
 
+    protected virtual bool CheckIfCanChase()
+    {
+        return _enemiesSM.HasDetectedPlayer && !_hasTriggeredAttack;
+    }
+
     protected virtual bool CheckIfCanPatrol()
     {
-        //Coi lại biến hasTriggeredAttack
         return Time.time - _entryTime > _enemiesSM.GetEnemiesSO().RestTime && !_hasTriggeredAttack;
     }
 
     protected virtual bool CheckIfCanAttack()
     {
-        return _enemiesSM.HasDetectedPlayer && !_hasTriggeredAttack;
+        Vector2 currentPos = _enemiesSM.transform.position;
+        Vector2 playerPos = _enemiesSM.PlayerRef.position;
+        float attackableDist = _enemiesSM.GetEnemiesSO().AttackableDistance;
+
+        return _enemiesSM.HasDetectedPlayer && !_hasTriggeredAttack
+            && Vector2.Distance(currentPos, playerPos) <= attackableDist;
     }
 
     public override void FixedUpdate() { }

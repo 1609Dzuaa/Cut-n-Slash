@@ -13,12 +13,18 @@ public class EnemiesStateManager : CharactersStateManager
     [Header("SO Data")]
     [SerializeField] protected EnemiesSO _enemiesSO;
 
+    [Header("Player Reference")]
+    [SerializeField] protected Transform _playerRef;
+
     #region States
+
     protected EnemiesIdleState _idleState = new();
     protected EnemiesPatrolState _patrolState = new();
     protected EnemiesAttackState _attackState = new();
     protected EnemiesGetHitState _getHitState = new();
     protected EnemiesDieState _dieState = new();
+    protected EnemiesChaseState _chaseState = new();
+
     #endregion
 
     protected RaycastHit2D _pRayHit;
@@ -40,10 +46,13 @@ public class EnemiesStateManager : CharactersStateManager
 
     public EnemiesDieState GetDieState() { return _dieState; }
 
+    public EnemiesChaseState GetChaseState() { return _chaseState; }
+
     public bool HasDetectedPlayer { get => _hasDetectedPlayer; }
 
     public bool HasDetectedPlayerBackward { get => _hasDetectedPlayerBackward; }
 
+    public Transform PlayerRef { get => _playerRef; }
 
     protected override void Awake()
     {
@@ -69,7 +78,7 @@ public class EnemiesStateManager : CharactersStateManager
         base.Update();
         DetectPlayer();
         DrawRayDetectPlayer();
-        Debug.Log("Front, Back: " + _hasDetectedPlayer + ", " + _hasDetectedPlayerBackward);
+        //Debug.Log("Front, Back: " + _hasDetectedPlayer + ", " + _hasDetectedPlayerBackward);
     }
 
     public override void ChangeState(CharacterBaseState state)

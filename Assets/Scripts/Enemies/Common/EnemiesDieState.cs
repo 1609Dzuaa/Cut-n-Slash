@@ -7,6 +7,7 @@ public class EnemiesDieState : EnemiesBaseState
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
+        _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Die);
         Debug.Log("Enemies Base Die");
     }
 

@@ -14,7 +14,7 @@ public class PlayerDashState : PlayerBaseState
         _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Dash);
         _entryTime = Time.time;
         HandleDash();
-        Debug.Log("Dash");
+        //Debug.Log("Dash");
     }
 
     public override void ExitState() { }

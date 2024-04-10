@@ -20,7 +20,9 @@ MonoBehaviour:
     m_Bits: 64
   _playerCheckDistance: 6
   _gwCheckDistance: 1
-  _patrolSpeed: 6
+  _attackableDistance: 5
+  _patrolSpeed: 4
+  _chaseSpeed: 6
   _knockForce: {x: 0, y: 0}
   _attackDelay: 0.315
   _restTime: 1

@@ -28,6 +28,8 @@ public class EnemiesPatrolState : EnemiesBaseState
             _hasTriggeredAttack = true;
             _enemiesSM.StartCoroutine(_enemiesSM.TriggerAttack());
         }
+        else if (CheckIfCanChase())
+            _enemiesSM.ChangeState(_enemiesSM.GetChaseState());
         else if (CheckIfCanRest())
             _enemiesSM.ChangeState(_enemiesSM.GetIdleState());
         else if (_enemiesSM.HasDetectedPlayerBackward)
@@ -46,6 +48,16 @@ public class EnemiesPatrolState : EnemiesBaseState
     }
 
     protected virtual bool CheckIfCanAttack()
+    {
+        Vector2 currentPos = _enemiesSM.transform.position;
+        Vector2 playerPos = _enemiesSM.PlayerRef.position;
+        float attackableDist = _enemiesSM.GetEnemiesSO().AttackableDistance;
+
+        return _enemiesSM.HasDetectedPlayer && !_hasTriggeredAttack
+            && Vector2.Distance(currentPos, playerPos) <= attackableDist;
+    }
+
+    protected virtual bool CheckIfCanChase()
     {
         return _enemiesSM.HasDetectedPlayer && !_hasTriggeredAttack;
     }

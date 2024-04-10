@@ -164,14 +164,7 @@ public class PlayerStateManager : CharactersStateManager
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag(TRAP_TAG))
-        {
             ChangeState(_getHitState);
-            //Lấy vị trí va chạm
-            ContactPoint2D contacts = collision.GetContact(0);
-            GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
-            bloodVfx.SetActive(true);
-            bloodVfx.transform.position = contacts.point;
-        }
     }
 
     protected override void FixedUpdate()

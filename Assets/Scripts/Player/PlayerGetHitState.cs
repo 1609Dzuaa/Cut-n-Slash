@@ -8,7 +8,7 @@ public class PlayerGetHitState : PlayerBaseState
     {
         base.EnterState(charactersSM);
         _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.GetHit);
-        Debug.Log("P Get Hit");
+        //Debug.Log("P Get Hit");
     }
 
     public override void ExitState()

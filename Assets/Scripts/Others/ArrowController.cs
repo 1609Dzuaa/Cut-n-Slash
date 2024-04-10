@@ -55,6 +55,11 @@ public class ArrowController : GameObjectController
         if (collision.collider.CompareTag(GameConstants.PLAYER_TAG))
         {
             //Dealing Dmg
+            //Lấy vị trí va chạm
+            ContactPoint2D contacts = collision.GetContact(0);
+            GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
+            bloodVfx.SetActive(true);
+            bloodVfx.transform.position = contacts.point;
             gameObject.SetActive(false);
         }
     }
