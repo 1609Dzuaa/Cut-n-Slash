@@ -63,7 +63,7 @@ public class PlayerStateManager : CharactersStateManager
 
     bool _isOnPlatform;
     bool _isOnGround;
-    bool _hasGetHit;
+    bool _hasGetHit; //Tránh Trigger bị gọi nhiều lần
     bool _canJump;
     bool _isWallTouch;
     RaycastHit2D _isWallHit;

@@ -11,4 +11,9 @@ public class SkeletonStateManager : EnemiesStateManager
     {
         ChangeState(_attack2State);    
     }
+
+    private void WakeUpRigidBody2D()
+    {
+        _rb.WakeUp();
+    }
 }
