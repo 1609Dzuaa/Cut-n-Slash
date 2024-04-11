@@ -33,6 +33,7 @@ public class EnemiesStateManager : CharactersStateManager
     protected bool _hasDetectedPlayerBackward;
     protected bool _hasDetectedGround;
     protected bool _hasDetectedWall;
+    protected bool _hasGetHit;
 
     public EnemiesSO GetEnemiesSO() { return _enemiesSO; }
 
@@ -51,6 +52,8 @@ public class EnemiesStateManager : CharactersStateManager
     public bool HasDetectedPlayer { get => _hasDetectedPlayer; }
 
     public bool HasDetectedPlayerBackward { get => _hasDetectedPlayerBackward; }
+
+    public bool HasGetHit { get => _hasGetHit; set => _hasGetHit = value; }
 
     public Transform PlayerRef { get => _playerRef; }
 
@@ -95,16 +98,18 @@ public class EnemiesStateManager : CharactersStateManager
 
     protected virtual void OnTriggerEnter2D(Collider2D collision) 
     {
-        if (collision.CompareTag(GameConstants.PLAYER_SWORD_TAG))
+        if (collision.CompareTag(GameConstants.PLAYER_SWORD_TAG) && !_hasGetHit)
         {
+            _hasGetHit = true;
             ChangeState(_getHitState);
         }
     }
 
     protected virtual void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag(GameConstants.PLAYER_SWORD_TAG))
+        if (collision.CompareTag(GameConstants.PLAYER_SWORD_TAG) && !_hasGetHit)
         {
+            _hasGetHit = true;
             ChangeState(_getHitState);
         }
     }

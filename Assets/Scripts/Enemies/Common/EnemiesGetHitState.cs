@@ -13,7 +13,7 @@ public class EnemiesGetHitState : EnemiesBaseState
 
     public override void ExitState()
     {
-        base.ExitState();
+        _enemiesSM.HasGetHit = false;
     }
 
     public override void UpdateState()
