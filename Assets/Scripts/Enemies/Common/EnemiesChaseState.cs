@@ -6,6 +6,7 @@ public class EnemiesChaseState : EnemiesBaseState
 {
     //State này sẽ đuổi theo Player cho đến khi đạt ngưỡng AttackableRange
     //thì switch sang Attack (Áp dụng cho cả Melee, Ranged Enemies)
+    //Bug rượt mà drag player theo và rượt ngược hướng Player ?
     bool _hasTriggeredAttack;
 
     public override void EnterState(CharactersStateManager charactersSM)
@@ -28,15 +29,10 @@ public class EnemiesChaseState : EnemiesBaseState
             _hasTriggeredAttack = true;
             _enemiesSM.StartCoroutine(_enemiesSM.TriggerAttack());
         }
+        else if (CheckIfCanIdle())
+            _enemiesSM.ChangeState(_enemiesSM.GetIdleState());
         else
-        {
-            Vector2 currentPos = _enemiesSM.transform.position;
-            Vector2 playerPos = _enemiesSM.PlayerRef.position;
-            float chaseSpeed = _enemiesSM.GetEnemiesSO().ChaseSpeed;
-
-            _enemiesSM.transform.position = Vector2.MoveTowards(currentPos, playerPos, chaseSpeed * Time.deltaTime);
-        } 
-            
+            HandleFlipTowardsPlayer();
     }
 
     protected virtual bool CheckIfCanAttack()
@@ -49,8 +45,30 @@ public class EnemiesChaseState : EnemiesBaseState
             && Vector2.Distance(currentPos, playerPos) <= attackableDist;
     }
 
+    protected virtual bool CheckIfCanIdle()
+    {
+        return !_enemiesSM.HasDetectedPlayer;
+    }
+
+    protected void HandleFlipTowardsPlayer()
+    {
+        float playerPosX = _enemiesSM.PlayerRef.transform.position.x;
+        float currentPosX = _enemiesSM.transform.position.x;
+        bool isRight = _enemiesSM.IsFacingRight;
+
+        if (currentPosX > playerPosX + GameConstants.FLIPABLE_OFFSET && isRight)
+            _enemiesSM.FlippingSprite();
+        else if (currentPosX < playerPosX - GameConstants.FLIPABLE_OFFSET && !isRight)
+            _enemiesSM.FlippingSprite();
+    }
+
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
+        //Move = velo thay vì MoveTowards cho đỡ bug
+        float chaseSpeed = _enemiesSM.GetEnemiesSO().ChaseSpeed;
+        float yVelo = _enemiesSM.GetRigidbody2D.velocity.y;
+        bool isRight = _enemiesSM.IsFacingRight;
+
+        _enemiesSM.GetRigidbody2D.velocity = new((isRight) ? chaseSpeed : -chaseSpeed, yVelo);
     }
 }

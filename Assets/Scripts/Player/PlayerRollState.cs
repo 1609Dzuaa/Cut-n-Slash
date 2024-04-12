@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerRollState : PlayerBaseState
 {
+    float _entryTime;
+
+    public float EntryTime { get => _entryTime; }
+
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
@@ -12,6 +16,7 @@ public class PlayerRollState : PlayerBaseState
         //Và cho phép Player Roll xuyên qua Enemies (DeadCells's mechanic)
         //x: 0.3274712; y: -0.7
         //Sử dụng properties bên Animation
+        _entryTime = Time.time;
         Debug.Log("Roll");
     }
 

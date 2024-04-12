@@ -64,9 +64,10 @@ public class EnemiesPatrolState : EnemiesBaseState
 
     public override void FixedUpdate()
     {
-        if (_enemiesSM.IsFacingRight)
-            _enemiesSM.GetRigidbody2D.velocity = new Vector2(_enemiesSM.GetEnemiesSO().PatrolSpeed, _enemiesSM.GetRigidbody2D.velocity.y);
-        else
-            _enemiesSM.GetRigidbody2D.velocity = new Vector2(-_enemiesSM.GetEnemiesSO().PatrolSpeed, _enemiesSM.GetRigidbody2D.velocity.y);
+        float patrolSpeed = _enemiesSM.GetEnemiesSO().PatrolSpeed;
+        float yVelo = _enemiesSM.GetRigidbody2D.velocity.y;
+        bool isRight = _enemiesSM.IsFacingRight;
+
+        _enemiesSM.GetRigidbody2D.velocity = new((isRight) ? patrolSpeed : -patrolSpeed, yVelo);
     }
 }

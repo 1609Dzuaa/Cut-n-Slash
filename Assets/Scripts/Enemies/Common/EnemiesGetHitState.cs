@@ -1,9 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemiesGetHitState : EnemiesBaseState
 {
+    //Bug đơ animation ở state này
+
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);

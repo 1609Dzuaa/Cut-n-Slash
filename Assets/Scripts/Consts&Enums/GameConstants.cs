@@ -19,6 +19,7 @@ public static class GameConstants
 
     public const float NEAR_ZERO_THRESHOLD = 0.1f;
     public const float PLAYER_DEFAULT_GRAV = 1.7f;
+    public const float FLIPABLE_OFFSET = 1.5f;
 
     #region Animator's Parameters
 

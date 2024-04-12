@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemiesStateManager : CharactersStateManager
 {
+    //Quái trông vẫn hơi đơ ?
+
     [Header("Check Properties")]
     [SerializeField] protected Transform _playerCheck;
     [SerializeField, Tooltip("Check Player ở phía sau")] protected Transform _playerCheck2;
@@ -27,8 +29,8 @@ public class EnemiesStateManager : CharactersStateManager
 
     #endregion
 
-    protected RaycastHit2D _pRayHit;
-    protected RaycastHit2D _pRayHit2;
+    protected RaycastHit2D _detectPlayerRayFront;
+    protected RaycastHit2D _detectPlayerRayBack;
     protected bool _hasDetectedPlayer;
     protected bool _hasDetectedPlayerBackward;
     protected bool _hasDetectedGround;
@@ -79,9 +81,20 @@ public class EnemiesStateManager : CharactersStateManager
     protected override void Update()
     {
         base.Update();
-        DetectPlayer();
         DrawRayDetectPlayer();
+        DrawRayDetectWall();
+        DrawRayDetectGround();
+        HandleChangeDirection();
+        Debug.Log("Wall, Ground: " + _hasDetectedWall + ", " + _hasDetectedGround);
         //Debug.Log("Front, Back: " + _hasDetectedPlayer + ", " + _hasDetectedPlayerBackward);
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        DetectPlayer();
+        DetectWall();
+        DetectGround();
     }
 
     public override void ChangeState(CharacterBaseState state)
@@ -92,6 +105,12 @@ public class EnemiesStateManager : CharactersStateManager
         _state.ExitState();
         _state = state;
         _state.EnterState(this);
+    }
+
+    protected void HandleChangeDirection()
+    {
+        if (_hasDetectedWall || !_hasDetectedGround)
+            FlippingSprite();
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision) { }
@@ -127,21 +146,21 @@ public class EnemiesStateManager : CharactersStateManager
 
         if (!_isFacingRight)
         {
-            _pRayHit = Physics2D.Raycast(_playerCheck.position, Vector2.left, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
-            _pRayHit2 = Physics2D.Raycast(_playerCheck2.position, Vector2.right, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
+            _detectPlayerRayFront = Physics2D.Raycast(_playerCheck.position, Vector2.left, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
+            _detectPlayerRayBack = Physics2D.Raycast(_playerCheck2.position, Vector2.right, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
         }
         else
         {
-            _pRayHit = Physics2D.Raycast(_playerCheck.position, Vector2.right, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
-            _pRayHit2 = Physics2D.Raycast(_playerCheck2.position, Vector2.left, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
+            _detectPlayerRayFront = Physics2D.Raycast(_playerCheck.position, Vector2.right, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
+            _detectPlayerRayBack = Physics2D.Raycast(_playerCheck2.position, Vector2.left, _enemiesSO.PlayerCheckDistance, _enemiesSO.PlayerLayer);
         }
 
-        if (_pRayHit && _pRayHit.collider.CompareTag(GameConstants.PLAYER_TAG))
+        if (_detectPlayerRayFront && _detectPlayerRayFront.collider.CompareTag(GameConstants.PLAYER_TAG))
             _hasDetectedPlayer = true;
         else
             _hasDetectedPlayer = false;
 
-        if (_pRayHit2 && _pRayHit2.collider.CompareTag(GameConstants.PLAYER_TAG))
+        if (_detectPlayerRayBack && _detectPlayerRayBack.collider.CompareTag(GameConstants.PLAYER_TAG))
             _hasDetectedPlayerBackward = true;
         else
             _hasDetectedPlayerBackward = false;
@@ -178,6 +197,47 @@ public class EnemiesStateManager : CharactersStateManager
             else
                 Debug.DrawRay(_playerCheck2.position, Vector2.left * _enemiesSO.PlayerCheckDistance, Color.blue);
         }
+    }
+
+    protected virtual bool DetectWall()
+    {
+        if (!_isFacingRight)
+            _hasDetectedWall = Physics2D.Raycast(_wallCheck.position, Vector2.left, _enemiesSO.GWCheckDistance, _enemiesSO.GWLayer);
+        else
+            _hasDetectedWall = Physics2D.Raycast(_wallCheck.position, Vector2.right, _enemiesSO.GWCheckDistance, _enemiesSO.GWLayer);
+
+        return _hasDetectedWall;
+    }
+
+    protected virtual void DrawRayDetectWall()
+    {
+        if (!_hasDetectedGround)
+        {
+            if (!_isFacingRight)
+                Debug.DrawRay(_wallCheck.position, Vector2.left * _enemiesSO.GWCheckDistance, Color.green);
+            else
+                Debug.DrawRay(_wallCheck.position, Vector2.right * _enemiesSO.GWCheckDistance, Color.green);
+        }
+        else
+        {
+            if (!_isFacingRight)
+                Debug.DrawRay(_wallCheck.position, Vector2.left * _enemiesSO.GWCheckDistance, Color.red);
+            else
+                Debug.DrawRay(_wallCheck.position, Vector2.right * _enemiesSO.GWCheckDistance, Color.red);
+        }
+    }
+
+    protected virtual void DetectGround()
+    {
+        _hasDetectedGround = Physics2D.Raycast(_groundCheck.position, Vector2.down, _enemiesSO.GWCheckDistance, _enemiesSO.GWLayer);
+    }
+
+    protected virtual void DrawRayDetectGround()
+    {
+        if (!_hasDetectedGround)
+            Debug.DrawRay(_groundCheck.position, Vector2.down * _enemiesSO.GWCheckDistance, Color.green);
+        else
+            Debug.DrawRay(_groundCheck.position, Vector2.down * _enemiesSO.GWCheckDistance, Color.red);
     }
 
     protected virtual void SelfDestroy() { Destroy(gameObject); }

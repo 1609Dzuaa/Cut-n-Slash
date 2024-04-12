@@ -64,7 +64,9 @@ public class PlayerWalkState : PlayerBaseState
 
     private bool CheckIfCanRoll()
     {
-        return Input.GetKeyDown(KeyCode.LeftControl) && _playerSM.IsOnGround;
+        float rollEntryTime = _playerSM.RollState.EntryTime;
+        return Input.GetKeyDown(KeyCode.LeftControl) && _playerSM.IsOnGround
+            && Time.time - rollEntryTime >= _playerSM.RollDelay;
     }
 
     public override void FixedUpdate()

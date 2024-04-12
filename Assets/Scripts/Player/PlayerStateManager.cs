@@ -41,6 +41,7 @@ public class PlayerStateManager : CharactersStateManager
     float _timeCanLanding;
     [SerializeField] float _delayUpdateDash; //Tương tự như trên
     [SerializeField] float _dashDelay;
+    [SerializeField] float _rollDelay;
 
     #region Player's States
 
@@ -123,6 +124,8 @@ public class PlayerStateManager : CharactersStateManager
     public float DelayUpdateDash { get=> _delayUpdateDash; }
 
     public float DashDelay { get => _dashDelay; }
+
+    public float RollDelay { get => _rollDelay; }
 
     public float TimeCanLanding { get => _timeCanLanding; }
 
