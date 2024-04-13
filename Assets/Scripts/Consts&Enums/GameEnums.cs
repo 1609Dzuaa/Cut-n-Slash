@@ -30,18 +30,12 @@ public static class GameEnums
         GetHit = 3,
         Die = 4,
         Chase = 5,
+        Attack2 = 6,
     }
 
     public enum EArcherState
     {
         Withdrawn = 5,
-    }
-
-    public enum EDevilEyeState { Attack2 = 6, }
-
-    public enum ESkeletonState
-    {
-        Attack2 = 6
     }
 
     public enum EEvents

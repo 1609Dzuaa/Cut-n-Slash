@@ -131,9 +131,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5230406007969805768}
+  - {fileID: 6832781688217263289}
   - {fileID: 747358856911618067}
   - {fileID: 7426576199979242443}
-  - {fileID: 6832781688217263289}
   - {fileID: 3783101329655306100}
   - {fileID: 3454842089573472736}
   m_Father: {fileID: 0}
@@ -221,9 +221,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3801352803499160521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55cd2eac54899c2438011d81618d7d7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cde212e3e121224b9ed9c3f9806da7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isSpriteDefaultRight: 1
   _playerCheck: {fileID: 5230406007969805768}
   _playerCheck2: {fileID: 6832781688217263289}
   _groundCheck: {fileID: 747358856911618067}
@@ -306,7 +307,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3801352803499160523}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6187780681916990540
 GameObject:
@@ -403,7 +404,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3801352803499160523}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7542733133891183450
 GameObject:
@@ -434,5 +435,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3801352803499160523}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

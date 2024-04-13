@@ -6,6 +6,8 @@ using static GameConstants;
 
 public class PlayerStateManager : CharactersStateManager
 {
+    //Bug animation bị đứng ở GetHit khi bị nhiều enemy tđvl
+
     [Header("Check Properties")]
     [SerializeField] Transform _groundCheck;
     [SerializeField] float _groundCheckRadius;

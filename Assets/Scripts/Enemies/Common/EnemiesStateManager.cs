@@ -26,6 +26,7 @@ public class EnemiesStateManager : CharactersStateManager
     protected EnemiesGetHitState _getHitState = new();
     protected EnemiesDieState _dieState = new();
     protected EnemiesChaseState _chaseState = new();
+    protected EnemiesAttack2State _attack2State = new();
 
     #endregion
 
@@ -271,5 +272,11 @@ public class EnemiesStateManager : CharactersStateManager
     protected void WakeUpRigidBody2D()
     {
         _rb.WakeUp();
+    }
+
+    //1 số enemy sẽ có đòn attack thứ 2
+    protected void ChangeToAttack2()
+    {
+        ChangeState(_attack2State);
     }
 }
