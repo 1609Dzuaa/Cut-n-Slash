@@ -156,7 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2277930295311657894, guid: ae794803ae7f9f148874e2fbb98ce07a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2277930295311657894, guid: ae794803ae7f9f148874e2fbb98ce07a, type: 3}
       propertyPath: m_LocalRotation.x
@@ -164,7 +164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2277930295311657894, guid: ae794803ae7f9f148874e2fbb98ce07a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2277930295311657894, guid: ae794803ae7f9f148874e2fbb98ce07a, type: 3}
       propertyPath: m_LocalRotation.z
@@ -176,10 +176,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2277930295311657894, guid: ae794803ae7f9f148874e2fbb98ce07a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2277930295311657894, guid: ae794803ae7f9f148874e2fbb98ce07a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2277930295311657898, guid: ae794803ae7f9f148874e2fbb98ce07a, type: 3}
+      propertyPath: _playerRef
+      value: 
+      objectReference: {fileID: 727356915}
+    - target: {fileID: 5886513291161883484, guid: ae794803ae7f9f148874e2fbb98ce07a, type: 3}
+      propertyPath: _playerRef
+      value: 
+      objectReference: {fileID: 727356915}
+    - target: {fileID: 5886513291161883484, guid: ae794803ae7f9f148874e2fbb98ce07a, type: 3}
+      propertyPath: _isSpriteDefaultRight
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -679,6 +691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46d4b5a0a8f98604094f5a577ca04010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isSpriteDefaultRight: 1
   _groundCheck: {fileID: 637963421}
   _groundCheckRadius: 0.4
   _wallCheck: {fileID: 1301738334}
@@ -716,7 +729,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1.7
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9dfbd6c04ffc911498ea63644a5564fe, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -1100,6 +1113,10 @@ PrefabInstance:
       propertyPath: _playerRef
       value: 
       objectReference: {fileID: 727356915}
+    - target: {fileID: 3801352803499160501, guid: fff8743f9a5bea548b037a925d92a2ca, type: 3}
+      propertyPath: _isSpriteDefaultRight
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3801352803499160502, guid: fff8743f9a5bea548b037a925d92a2ca, type: 3}
       propertyPath: m_SleepingMode
       value: 1
@@ -1110,7 +1127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3801352803499160521, guid: fff8743f9a5bea548b037a925d92a2ca, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3801352803499160523, guid: fff8743f9a5bea548b037a925d92a2ca, type: 3}
       propertyPath: m_RootOrder
@@ -1320,13 +1337,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4544659570677852566, guid: 1357d64ee95986947b18dc52539a8f6a, type: 3}
+      propertyPath: _playerRef
+      value: 
+      objectReference: {fileID: 727356915}
     - target: {fileID: 8291193024293278025, guid: 1357d64ee95986947b18dc52539a8f6a, type: 3}
       propertyPath: m_Name
       value: DevilEye
       objectReference: {fileID: 0}
     - target: {fileID: 8291193024293278025, guid: 1357d64ee95986947b18dc52539a8f6a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8291193024293278027, guid: 1357d64ee95986947b18dc52539a8f6a, type: 3}
       propertyPath: m_RootOrder
@@ -1334,7 +1355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8291193024293278027, guid: 1357d64ee95986947b18dc52539a8f6a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.08
+      value: 3.14
       objectReference: {fileID: 0}
     - target: {fileID: 8291193024293278027, guid: 1357d64ee95986947b18dc52539a8f6a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1374,7 +1395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8291193024293278029, guid: 1357d64ee95986947b18dc52539a8f6a, type: 3}
       propertyPath: m_BodyType
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8291193024293278030, guid: 1357d64ee95986947b18dc52539a8f6a, type: 3}
       propertyPath: m_IsTrigger

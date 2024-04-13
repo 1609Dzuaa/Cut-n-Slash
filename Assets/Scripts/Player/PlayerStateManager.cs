@@ -154,6 +154,7 @@ public class PlayerStateManager : CharactersStateManager
 
     protected override void SetupProperties()
     {
+        base.SetupProperties();
         _state = _idleState;
         _state.EnterState(this);
     }
@@ -171,13 +172,6 @@ public class PlayerStateManager : CharactersStateManager
     {
         if (collision.collider.CompareTag(TRAP_TAG))
             ChangeState(_getHitState);
-        /*else if(collision.collider.CompareTag(ENEMIES_WEAPON_TAG))
-        {
-            GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
-            bloodVfx.SetActive(true);
-            bloodVfx.transform.position = transform.position;
-            ChangeState(_getHitState);
-        }*/
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -185,10 +179,9 @@ public class PlayerStateManager : CharactersStateManager
         if (collision.CompareTag(ENEMIES_WEAPON_TAG) && !_hasGetHit)
         {
             _hasGetHit = true;
-            //ContactPoint2D contacts = collision.GetContacts(;
             GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
             bloodVfx.SetActive(true);
-            bloodVfx.transform.position = transform.position;
+            bloodVfx.transform.position = collision.ClosestPoint(transform.position);
             ChangeState(_getHitState);
         }
         Debug.Log("here: " + _hasGetHit);
@@ -221,6 +214,8 @@ public class PlayerStateManager : CharactersStateManager
 
     private void HandleFlipSprite()
     {
+        if (_state is PlayerRollState || _state is PlayerDashState) return;
+
         if (_dirX > 0f && !_isFacingRight)
             FlippingSprite();
         else if (_dirX < 0f && _isFacingRight)

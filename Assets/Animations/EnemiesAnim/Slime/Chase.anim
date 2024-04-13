@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Walk
+  m_Name: Chase
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -21,17 +21,17 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300000, guid: 8ce4c6f349eb03e4abf3dba3af297f74, type: 3}
-    - time: 0.1
+    - time: 0.05882353
       value: {fileID: 21300000, guid: 637a3d05c2f92ef43887d4585c6c64e2, type: 3}
-    - time: 0.2
+    - time: 0.11764706
       value: {fileID: 21300000, guid: be17443c3a06d9e44a1ff7d131fd2c38, type: 3}
-    - time: 0.3
+    - time: 0.1764706
       value: {fileID: 21300000, guid: 011eb33eaf761b2448a3e2dde3985562, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 10
+  m_SampleRate: 17
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -55,7 +55,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.4
+    m_StopTime: 0.23529412
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

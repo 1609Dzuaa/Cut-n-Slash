@@ -71,8 +71,7 @@ public class EnemiesStateManager : CharactersStateManager
 
     protected override void SetupProperties()
     {
-        if (Mathf.Abs(transform.rotation.eulerAngles.y) >= 180f)
-            _isFacingRight = false;
+        base.SetupProperties();
         _state = _idleState;
         _state.EnterState(this);
         //Debug.Log("IfR, yAngles: " + _isFacingRight + ", " + transform.rotation.eulerAngles.y);
@@ -109,7 +108,7 @@ public class EnemiesStateManager : CharactersStateManager
 
     protected void HandleChangeDirection()
     {
-        if (_hasDetectedWall || !_hasDetectedGround)
+        if (_hasDetectedWall || !_hasDetectedGround && _groundCheck)
             FlippingSprite();
     }
 
@@ -229,15 +228,17 @@ public class EnemiesStateManager : CharactersStateManager
 
     protected virtual void DetectGround()
     {
-        _hasDetectedGround = Physics2D.Raycast(_groundCheck.position, Vector2.down, _enemiesSO.GWCheckDistance, _enemiesSO.GWLayer);
+        if (_groundCheck)
+            _hasDetectedGround = Physics2D.Raycast(_groundCheck.position, Vector2.down, _enemiesSO.GWCheckDistance, _enemiesSO.GWLayer);
     }
 
     protected virtual void DrawRayDetectGround()
     {
-        if (!_hasDetectedGround)
-            Debug.DrawRay(_groundCheck.position, Vector2.down * _enemiesSO.GWCheckDistance, Color.green);
-        else
-            Debug.DrawRay(_groundCheck.position, Vector2.down * _enemiesSO.GWCheckDistance, Color.red);
+        if (_groundCheck)
+            if (!_hasDetectedGround)
+                Debug.DrawRay(_groundCheck.position, Vector2.down * _enemiesSO.GWCheckDistance, Color.green);
+            else
+                Debug.DrawRay(_groundCheck.position, Vector2.down * _enemiesSO.GWCheckDistance, Color.red);
     }
 
     protected virtual void SelfDestroy() { Destroy(gameObject); }
@@ -266,4 +267,9 @@ public class EnemiesStateManager : CharactersStateManager
         ChangeState(_idleState);
     }
 
+    //Khi attack thì WakeUp rb để bắt va chạm
+    protected void WakeUpRigidBody2D()
+    {
+        _rb.WakeUp();
+    }
 }
