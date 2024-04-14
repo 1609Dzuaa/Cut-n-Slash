@@ -121,6 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43f45ed4de3333a40a2d905963a432ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isSpriteDefaultRight: 1
+  _isFacingRight: 1
   _speed: 5
   _existTime: 2.5
 --- !u!50 &4244377229838734520

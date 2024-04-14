@@ -10,7 +10,7 @@ public class PlayerIdleState : PlayerBaseState
         _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Idle);
         _playerSM.GetAnim.SetBool(GameConstants.ANIM_PARA_ON_GROUND, true);
         _playerSM.GetRigidbody2D.velocity = Vector2.zero;
-        Debug.Log("Idle");
+        //Debug.Log("Idle");
     }
 
     public override void ExitState()

@@ -85,7 +85,7 @@ public class EnemiesStateManager : CharactersStateManager
         DrawRayDetectWall();
         DrawRayDetectGround();
         HandleChangeDirection();
-        Debug.Log("Wall, Ground: " + _hasDetectedWall + ", " + _hasDetectedGround);
+        //Debug.Log("Wall, Ground: " + _hasDetectedWall + ", " + _hasDetectedGround);
         //Debug.Log("Front, Back: " + _hasDetectedPlayer + ", " + _hasDetectedPlayerBackward);
     }
 

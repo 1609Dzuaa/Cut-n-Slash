@@ -5,6 +5,8 @@ using static GameEnums;
 
 public class ArcherStateManager : EnemiesStateManager
 {
+    //Fix bug Archer
+
     [Header("Withdrawn Force")]
     [SerializeField] Vector2 _withdrawnForce;
 
@@ -71,6 +73,7 @@ public class ArcherStateManager : EnemiesStateManager
         Gizmos.DrawCube(transform.position, _withdrawnableRange);
     }
 
+    //event của animation Attack
     private void SpawnArrow()
     {
         GameObject archerArrow = PoolManager.Instance.GetObjectInPool(EPoolable.ArcherArrow);

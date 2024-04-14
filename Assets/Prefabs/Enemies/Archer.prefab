@@ -60,6 +60,68 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5580269436430855260}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2786626264866345434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1326732645517640044}
+  m_Layer: 0
+  m_Name: WallCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1326732645517640044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2786626264866345434}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.93, y: 0.78, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5580269436430855260}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4491136979549902982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4454244440949209508}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4454244440949209508
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4491136979549902982}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.86, y: -1.17, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5580269436430855260}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5580269436430855262
@@ -97,6 +159,8 @@ Transform:
   m_Children:
   - {fileID: 4407945822873144844}
   - {fileID: 775068497581266057}
+  - {fileID: 4454244440949209508}
+  - {fileID: 1326732645517640044}
   - {fileID: 7047151417648235745}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -233,11 +297,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb9243dc157294a4a8870686c88779a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isFacingRight: 1
   _playerCheck: {fileID: 4407945822873144844}
   _playerCheck2: {fileID: 775068497581266057}
-  _groundCheck: {fileID: 0}
-  _wallCheck: {fileID: 0}
-  _enemiesSO: {fileID: 11400000, guid: f75c2cda5fc29114eaaf40a3b6441584, type: 2}
+  _groundCheck: {fileID: 4454244440949209508}
+  _wallCheck: {fileID: 1326732645517640044}
+  _enemiesSO: {fileID: 11400000, guid: 57f19f9eea2c0f448bf56abee2a67f3a, type: 2}
+  _playerRef: {fileID: 0}
   _withdrawnForce: {x: 3, y: 3}
   _withdrawnableRange: {x: 10, y: 1}
   _shootPos: {fileID: 7047151417648235745}

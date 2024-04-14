@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class GameObjectController : MonoBehaviour
 {
-    [SerializeField, 
-    Tooltip("Hướng mặc định của Sprite")] protected bool _isSpriteDefaultRight = true; 
-
     protected Animator _anim;
     protected Rigidbody2D _rb;
+    [SerializeField, Tooltip("Tick vào để chỉ hướng mặc định của Sprite")] 
     protected bool _isFacingRight;
 
     public Animator GetAnim { get => _anim; set => _anim = value; }
@@ -38,8 +36,6 @@ public class GameObjectController : MonoBehaviour
 
     protected virtual void SetupProperties() 
     {
-        //Xử lý hướng của sprite
-        _isFacingRight = _isSpriteDefaultRight;
         if (Mathf.Abs(transform.rotation.eulerAngles.y) >= 180f && _isFacingRight)
             _isFacingRight = false;
         else if(Mathf.Abs(transform.rotation.eulerAngles.y) >= 180f && !_isFacingRight)

@@ -10,12 +10,12 @@ public struct ArrowInfor
     {
         ID = id;
         Position = pos;
-        Direction = isRight;
+        IsDirectionRight = isRight;
     }
 
     public string ID;
     public Vector3 Position;
-    public bool Direction;
+    public bool IsDirectionRight;
 }
 
 public class ArrowController : GameObjectController
@@ -28,9 +28,20 @@ public class ArrowController : GameObjectController
 
     public string ID { get => _arrowID; }
 
+    //Với Arrow thì sẽ setup ở Awake thay vì Start (vì arrow có sd OnEnable) 
+    protected override void Awake()
+    {
+        base.Awake();
+        SetupProperties();
+    }
+
+    protected override void Start() { }
+
     protected override void SetupProperties()
     {
+        base.SetupProperties();
         _arrowID = Guid.NewGuid().ToString();
+        Debug.Log("Setup");
     }
 
     protected override void OnEnable()
@@ -67,7 +78,7 @@ public class ArrowController : GameObjectController
     private void FixedUpdate()
     {
         Vector2 vectorSpeed = new(_speed, 0f);
-        _rb.velocity = (IsFacingRight) ? vectorSpeed : vectorSpeed * Vector2.left; 
+        _rb.velocity = (_isFacingRight) ? vectorSpeed : vectorSpeed * Vector2.left; 
     }
 
     private void ReceiveInfor(object obj)
@@ -76,7 +87,7 @@ public class ArrowController : GameObjectController
         if (_arrowID != info.ID) return;
 
         transform.position = info.Position;
-        if (_isFacingRight != info.Direction) FlippingSprite();
-        _isFacingRight = info.Direction;
+        if (_isFacingRight != info.IsDirectionRight) FlippingSprite();
+        Debug.Log("Shooted");
     }
 }

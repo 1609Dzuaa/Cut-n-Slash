@@ -35,7 +35,7 @@ public static class GameEnums
 
     public enum EArcherState
     {
-        Withdrawn = 5,
+        Withdrawn = 6,
     }
 
     public enum EEvents

@@ -14,7 +14,7 @@ public class EnemiesChaseState : EnemiesBaseState
         base.EnterState(charactersSM);
         _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Chase);
         _enemiesSM.GetRigidbody2D.velocity = Vector2.zero;
-        Debug.Log("Enemies Base Chase");
+        //Debug.Log("Enemies Base Chase");
     }
 
     public override void ExitState()

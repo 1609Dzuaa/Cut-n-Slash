@@ -7,7 +7,7 @@ public class ArcherAttackState : EnemiesAttackState
     public override void EnterState(CharactersStateManager charactersSM)
     {
         base.EnterState(charactersSM);
-        Debug.Log("Archer Atk");
+        //Debug.Log("Archer Atk");
     }
 
     public override void ExitState()

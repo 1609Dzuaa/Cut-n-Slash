@@ -10,7 +10,7 @@ public class ArcherIdleState : EnemiesIdleState
     {
         base.EnterState(charactersSM);
         _archerSM = (ArcherStateManager)_enemiesSM;
-        Debug.Log("Archer Idle");
+        //Debug.Log("Archer Idle");
     }
 
     public override void ExitState()

@@ -16,7 +16,7 @@ public class EnemiesIdleState : EnemiesBaseState
         _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Idle);
         _enemiesSM.GetRigidbody2D.velocity = Vector2.zero;
         _entryTime = Time.time;
-        Debug.Log("Enemies Base Idle");
+        //Debug.Log("Enemies Base Idle");
     }
 
     public override void ExitState()
@@ -42,7 +42,7 @@ public class EnemiesIdleState : EnemiesBaseState
                 //Player ở phía sau thì Idle 1 lúc r flip
                 _hasStartedFlip = true;
                 _enemiesSM.StartCoroutine(_enemiesSM.DelayFlip());
-                Debug.Log("Player Backward");
+                //Debug.Log("Player Backward");
             }
         }
     }

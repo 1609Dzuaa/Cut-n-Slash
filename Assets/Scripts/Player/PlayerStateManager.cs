@@ -167,7 +167,7 @@ public class PlayerStateManager : CharactersStateManager
         HandleInput();
         HandleFlipSprite();
         GroundAndWallCheck();
-        Debug.Log("hGH: " + _hasGetHit);
+        //Debug.Log("hGH: " + _hasGetHit);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -186,7 +186,7 @@ public class PlayerStateManager : CharactersStateManager
             bloodVfx.transform.position = collision.ClosestPoint(transform.position);
             ChangeState(_getHitState);
         }
-        Debug.Log("here: " + _hasGetHit);
+        //Debug.Log("here: " + _hasGetHit);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -196,10 +196,10 @@ public class PlayerStateManager : CharactersStateManager
             _hasGetHit = true;
             GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
             bloodVfx.SetActive(true);
-            bloodVfx.transform.position = transform.position;
+            bloodVfx.transform.position = collision.ClosestPoint(transform.position);
             ChangeState(_getHitState);
         }
-        Debug.Log("hereStay: " + _hasGetHit);
+        //Debug.Log("hereStay: " + _hasGetHit);
     }
 
     protected override void FixedUpdate()
@@ -209,7 +209,6 @@ public class PlayerStateManager : CharactersStateManager
 
     private void HandleInput()
     {
-        //if (_hasWinGame) return;
         _dirX = Input.GetAxisRaw(HORIZONTAL_AXIS);
         _dirY = Input.GetAxisRaw(VERTICAL_AXIS);
     }
