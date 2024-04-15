@@ -5,12 +5,16 @@ using UnityEngine;
 public class ArcherWithdrawnState : EnemiesBaseState
 {
     ArcherStateManager _archerSM;
+    float _entryTime;
+
+    public float EntryTime { get => _entryTime; }
 
     public override void EnterState(CharactersStateManager charactersSM)
     {
         _archerSM = (ArcherStateManager)charactersSM;
         _archerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EArcherState.Withdrawn);
         HandleWithdrawn();
+        _entryTime = Time.time;
         Debug.Log("Withdrawn");
     }
 

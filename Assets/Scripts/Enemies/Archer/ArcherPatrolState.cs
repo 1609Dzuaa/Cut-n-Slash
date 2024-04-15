@@ -20,7 +20,11 @@ public class ArcherPatrolState : EnemiesPatrolState
 
     public override void UpdateState()
     {
-        if (_archerSM.WithdrawnCheck() && !_hasStartedFlip)
+        float withdrawnEntryTime = _archerSM.GetArcherWithdrawnState().EntryTime;
+        float withdrawnDelay = _archerSM.WithdrawnDelay;
+
+        if (_archerSM.WithdrawnCheck() && !_hasStartedFlip
+            && Time.time - withdrawnEntryTime >= withdrawnDelay)
             _archerSM.ChangeState(_archerSM.GetArcherWithdrawnState());
         else
             base.UpdateState();

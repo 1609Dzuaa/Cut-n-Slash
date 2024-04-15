@@ -107,7 +107,7 @@ public class EnemiesStateManager : CharactersStateManager
         _state.EnterState(this);
     }
 
-    protected void HandleChangeDirection()
+    protected virtual void HandleChangeDirection()
     {
         if (_hasDetectedWall || !_hasDetectedGround && _groundCheck)
             FlippingSprite();

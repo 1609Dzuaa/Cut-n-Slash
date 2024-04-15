@@ -21,8 +21,14 @@ public class ArcherIdleState : EnemiesIdleState
     public override void UpdateState()
     {
         //Tận dụng Update từ base class
-        if (_archerSM.WithdrawnCheck() && !_hasStartedFlip)
+        float withdrawnEntryTime = _archerSM.GetArcherWithdrawnState().EntryTime;
+        float withdrawnDelay = _archerSM.WithdrawnDelay;
+
+        if (_archerSM.WithdrawnCheck() && !_hasStartedFlip
+            && Time.time - withdrawnEntryTime >= withdrawnDelay)
             _archerSM.ChangeState(_archerSM.GetArcherWithdrawnState());
+        else if (_archerSM.TeleportCheck())
+            _archerSM.ChangeState(_archerSM.GetArcherTeleportState());
         else
             base.UpdateState();
     }
