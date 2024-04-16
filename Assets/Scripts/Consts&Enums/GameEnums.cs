@@ -52,7 +52,8 @@ public static class GameEnums
     {
         ArcherArrow = 1,
         BloodVfx = 2,
-
+        ArcherTeleportVfx = 3,
+        ArcherAppearVfx = 4,
     }
 
 }

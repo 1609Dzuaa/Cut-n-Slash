@@ -1,9 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ArcherWithdrawnState : EnemiesBaseState
 {
+    //Có bug từ withdrawn sang attack khiến withdrawn bị khựng lại giữa chừng
+
     ArcherStateManager _archerSM;
     float _entryTime;
 

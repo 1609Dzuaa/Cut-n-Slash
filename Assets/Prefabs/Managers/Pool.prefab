@@ -51,3 +51,9 @@ MonoBehaviour:
   - _ePoolable: 2
     _GObjPoolable: {fileID: 7494508280380295094, guid: ed043c84246e53b49bea66eb2f895b68, type: 3}
     _ammount: 5
+  - _ePoolable: 3
+    _GObjPoolable: {fileID: 4953119941750247426, guid: 516d2b5b851b73448bf5a59fea97b821, type: 3}
+    _ammount: 4
+  - _ePoolable: 4
+    _GObjPoolable: {fileID: 2999775181995002451, guid: 8b4a1fa97308a534b8d0458e7aa84f6c, type: 3}
+    _ammount: 4
