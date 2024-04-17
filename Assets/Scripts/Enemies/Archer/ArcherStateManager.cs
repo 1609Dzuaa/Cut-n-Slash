@@ -5,15 +5,8 @@ using static GameEnums;
 
 public class ArcherStateManager : EnemiesStateManager
 {
-    //Fix bug Archer
-    //Thêm state teleport (liệt kê các TH bị ép kh withdrawn đc)
-
-    [Header("Withdrawn Related")]
-    [SerializeField] Vector2 _withdrawnForce;
-    [Tooltip("Khoảng cách mà khi Player ở đủ gần" +
-        " thì nó sẽ Withdrawn")]
-    [SerializeField] Vector2 _withdrawnableRange;
-    [SerializeField, Tooltip("Khoảng thgian để có thể Withdrawn tiếp")] float _withdrawnDelay;
+    [Header("SO")]
+    [SerializeField] ArcherSO _archerSO;
 
     [SerializeField] Transform _shootPos;
 
@@ -21,8 +14,6 @@ public class ArcherStateManager : EnemiesStateManager
         " Phía sau có tường hoặc bờ vực")]
     [SerializeField] Transform _groundCheck2;
     [SerializeField] Transform _wallCheck2;
-    [SerializeField] Vector2 _check2Size;
-    [SerializeField] float _teleDist;
 
     #region States
 
@@ -37,17 +28,11 @@ public class ArcherStateManager : EnemiesStateManager
     bool _isWallBehind;
     bool _isGroundBehind;
 
-    public ArcherIdleState GetArcherIdleState() { return _archerIdleState; }
+    public ArcherSO ArcherSO { get => _archerSO; } 
 
     public ArcherWithdrawnState GetArcherWithdrawnState() { return _archerWithdrawnState; }
 
     public ArcherTeleportState GetArcherTeleportState() { return _archerTeleportState; }
-
-    public Vector2 WithdrawnForce { get => _withdrawnForce; }
-
-    public float WithdrawnDelay { get => _withdrawnDelay; }
-
-    public float TeleportDist { get => _teleDist; }
 
     protected override void Awake()
     {
@@ -61,6 +46,7 @@ public class ArcherStateManager : EnemiesStateManager
 
     protected override void SetupProperties()
     {
+        _enemiesSO = _archerSO;
         _idleState = _archerIdleState;
         _patrolState = _archerPatrolState;
         base.SetupProperties();
@@ -87,23 +73,24 @@ public class ArcherStateManager : EnemiesStateManager
 
     public bool WithdrawnCheck()
     {
-        _playerCol = Physics2D.OverlapBox(transform.position, _withdrawnableRange, _enemiesSO.PlayerLayer);
+        _playerCol = Physics2D.OverlapBox(transform.position, _archerSO.WithdrawnableRange, _enemiesSO.PlayerLayer);
+        if (_playerCol == null) return false;
         return _playerCol.CompareTag(GameConstants.PLAYER_TAG);
     }
 
     public bool TeleportCheck()
     {
-        _isWallBehind = Physics2D.OverlapBox(_wallCheck2.position, _check2Size, 0f, _enemiesSO.GWLayer);
-        _isGroundBehind = Physics2D.OverlapBox(_groundCheck2.position, _check2Size, 0f, _enemiesSO.GWLayer);
+        _isWallBehind = Physics2D.OverlapBox(_wallCheck2.position, _archerSO.Check2Size, 0f, _enemiesSO.GWLayer);
+        _isGroundBehind = Physics2D.OverlapBox(_groundCheck2.position, _archerSO.Check2Size, 0f, _enemiesSO.GWLayer);
 
         return _isWallBehind || !_isWallBehind && !_isGroundBehind;
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(transform.position, _withdrawnableRange);
-        Gizmos.DrawCube(_groundCheck2.position, _check2Size);
-        Gizmos.DrawCube(_wallCheck2.position, _check2Size);
+        Gizmos.DrawCube(transform.position, _archerSO.WithdrawnableRange);
+        Gizmos.DrawCube(_groundCheck2.position, _archerSO.Check2Size);
+        Gizmos.DrawCube(_wallCheck2.position, _archerSO.Check2Size);
     }
 
     //event của animation Attack

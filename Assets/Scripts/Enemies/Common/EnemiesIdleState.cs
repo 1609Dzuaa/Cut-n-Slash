@@ -14,7 +14,7 @@ public class EnemiesIdleState : EnemiesBaseState
     {
         base.EnterState(charactersSM);
         _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Idle);
-        _enemiesSM.GetRigidbody2D.velocity = Vector2.zero;
+        //_enemiesSM.GetRigidbody2D.velocity = Vector2.zero;
         _entryTime = Time.time;
         //Debug.Log("Enemies Base Idle");
     }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class ArcherWithdrawnState : EnemiesBaseState
 {
     //Có bug từ withdrawn sang attack khiến withdrawn bị khựng lại giữa chừng
+    //Lỗi do delay trigger attack (khả năng cao)
 
     ArcherStateManager _archerSM;
     float _entryTime;
@@ -33,9 +34,9 @@ public class ArcherWithdrawnState : EnemiesBaseState
     private void HandleWithdrawn()
     {
         if (_archerSM.IsFacingRight)
-            _archerSM.GetRigidbody2D.velocity = _archerSM.WithdrawnForce * new Vector2(-1f, 1f);
+            _archerSM.GetRigidbody2D.AddForce(_archerSM.ArcherSO.WithdrawnForce * new Vector2(-1f, 1f), ForceMode2D.Impulse);
         else
-            _archerSM.GetRigidbody2D.velocity = _archerSM.WithdrawnForce;
+            _archerSM.GetRigidbody2D.AddForce(_archerSM.ArcherSO.WithdrawnForce, ForceMode2D.Impulse);
     }
 
     public override void FixedUpdate()

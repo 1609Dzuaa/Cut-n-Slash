@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13bb2b2cad9d0f84581c16ce686a7b4a, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cd0e17b21bb8b343ba8dee7e2b18fb8, type: 3}
   m_Name: ArcherSO
   m_EditorClassIdentifier: 
   _playerLayer:
@@ -19,7 +19,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _playerCheckDistance: 11
-  _gwCheckDistance: 0.75
+  _gwCheckDistance: 3
   _attackableDistance: 10
   _patrolSpeed: 4
   _chaseSpeed: 7
@@ -28,3 +28,8 @@ MonoBehaviour:
   _restTime: 1
   _patrolTime: 1.71
   _delayFlipIfPlayerBackward: 1
+  _withdrawnForce: {x: 5, y: 5}
+  _withdrawnableRange: {x: 10, y: 1}
+  _withdrawnDelay: 1.7
+  _check2Size: {x: 1, y: 0.5}
+  _teleDist: 7

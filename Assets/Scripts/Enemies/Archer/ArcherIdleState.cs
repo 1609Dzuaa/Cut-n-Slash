@@ -22,13 +22,17 @@ public class ArcherIdleState : EnemiesIdleState
     {
         //Tận dụng Update từ base class
         float withdrawnEntryTime = _archerSM.GetArcherWithdrawnState().EntryTime;
-        float withdrawnDelay = _archerSM.WithdrawnDelay;
+        float withdrawnDelay = _archerSM.ArcherSO.WithdrawnDelay;
 
         if (_archerSM.WithdrawnCheck() && !_hasStartedFlip
-            && Time.time - withdrawnEntryTime >= withdrawnDelay)
-            _archerSM.ChangeState(_archerSM.GetArcherWithdrawnState());
-        else if (_archerSM.TeleportCheck())
-            _archerSM.ChangeState(_archerSM.GetArcherTeleportState());
+            && Time.time - withdrawnEntryTime >= withdrawnDelay
+            && !_hasTriggeredAttack)
+        {
+            if (_archerSM.TeleportCheck())
+                _archerSM.ChangeState(_archerSM.GetArcherTeleportState());
+            else
+                _archerSM.ChangeState(_archerSM.GetArcherWithdrawnState());
+        }
         else
             base.UpdateState();
     }

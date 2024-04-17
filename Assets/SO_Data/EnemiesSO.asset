@@ -24,7 +24,7 @@ MonoBehaviour:
   _patrolSpeed: 4
   _chaseSpeed: 7
   _knockForce: {x: 0, y: 0}
-  _attackDelay: 0.315
+  _attackDelay: 0.115
   _restTime: 1
   _patrolTime: 1.71
   _delayFlipIfPlayerBackward: 1

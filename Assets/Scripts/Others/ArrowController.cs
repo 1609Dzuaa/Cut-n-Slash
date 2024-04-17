@@ -41,7 +41,7 @@ public class ArrowController : GameObjectController
     {
         base.SetupProperties();
         _arrowID = Guid.NewGuid().ToString();
-        Debug.Log("Setup");
+        //Debug.Log("Setup");
     }
 
     protected override void OnEnable()
@@ -88,6 +88,6 @@ public class ArrowController : GameObjectController
 
         transform.position = info.Position;
         if (_isFacingRight != info.IsDirectionRight) FlippingSprite();
-        Debug.Log("Shooted");
+        //Debug.Log("Shooted");
     }
 }

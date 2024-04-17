@@ -30,7 +30,7 @@ public class ArcherTeleportState : EnemiesBaseState
     {
         SpawnDissapearVfx();
 
-        float teleDist = _archerSM.TeleportDist;
+        float teleDist = _archerSM.ArcherSO.TeleDist;
         float playerPosX = _archerSM.PlayerRef.position.x;
         float playerPosY = _archerSM.PlayerRef.position.y;
         float playerPosZ = _archerSM.PlayerRef.position.z;
