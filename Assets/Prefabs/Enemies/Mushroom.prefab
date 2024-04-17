@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cde212e3e121224b9ed9c3f9806da7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isSpriteDefaultRight: 1
+  _isFacingRight: 1
   _playerCheck: {fileID: 508672106203166347}
   _playerCheck2: {fileID: 1377683344775887844}
   _groundCheck: {fileID: 3051621154844765619}

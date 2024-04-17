@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cde212e3e121224b9ed9c3f9806da7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isSpriteDefaultRight: 1
+  _isFacingRight: 1
   _playerCheck: {fileID: 2490042020708541383}
   _playerCheck2: {fileID: 1474513448073546164}
   _groundCheck: {fileID: 6373511249298327960}

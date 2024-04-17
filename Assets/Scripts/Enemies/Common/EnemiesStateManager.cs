@@ -44,10 +44,6 @@ public class EnemiesStateManager : CharactersStateManager
 
     public EnemiesPatrolState GetPatrolState() { return _patrolState; }
 
-    public EnemiesAttackState GetAttackState() { return _attackState; }
-
-    public EnemiesGetHitState GetGetHitState() { return _getHitState; }
-
     public EnemiesDieState GetDieState() { return _dieState; }
 
     public EnemiesChaseState GetChaseState() { return _chaseState; }
