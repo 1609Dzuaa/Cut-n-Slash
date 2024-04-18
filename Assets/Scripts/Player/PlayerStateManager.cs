@@ -44,6 +44,11 @@ public class PlayerStateManager : CharactersStateManager
     [SerializeField] float _delayUpdateDash; //Tương tự như trên
     [SerializeField] float _dashDelay;
     [SerializeField] float _rollDelay;
+    [SerializeField] float _inVulnerableTime;
+
+    [Header("Get Hit Related")]
+    [SerializeField] float _alphaValGetHit;
+    [SerializeField] float _timeEachApplyAlpha;
 
     #region Player's States
 
@@ -69,7 +74,10 @@ public class PlayerStateManager : CharactersStateManager
     bool _hasGetHit; //Tránh Trigger bị gọi nhiều lần
     bool _canJump;
     bool _isWallTouch;
+    bool _hasStartCoroutine;
+    bool _isApplyGetHitEffect;
     RaycastHit2D _isWallHit;
+    SpriteRenderer _spriteRenderer;
     float _dirX, _dirY;
 
     #endregion
@@ -120,8 +128,7 @@ public class PlayerStateManager : CharactersStateManager
 
     public float EnableComboTime { get => _enableComboTime; }
 
-    //thừa ?
-    public float DelayUpdateAttack { get => _delayUpdateAttack; }
+    public bool IsApplyGetHitEffect { get => _isApplyGetHitEffect; set => _isApplyGetHitEffect = value; }
 
     public float DelayUpdateDash { get=> _delayUpdateDash; }
 
@@ -147,6 +154,7 @@ public class PlayerStateManager : CharactersStateManager
     protected override void GetReferenceComponents()
     {
         base.GetReferenceComponents();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     protected override void Start()
@@ -166,8 +174,14 @@ public class PlayerStateManager : CharactersStateManager
         base.Update();
         HandleInput();
         HandleFlipSprite();
-        GroundAndWallCheck();
+        HandleAlphaValueGetHit();
         //Debug.Log("hGH: " + _hasGetHit);
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        GroundAndWallCheck();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -178,8 +192,10 @@ public class PlayerStateManager : CharactersStateManager
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag(ENEMIES_WEAPON_TAG) && !_hasGetHit)
+        if (collision.CompareTag(ENEMIES_WEAPON_TAG) || collision.CompareTag(TRAP_TAG) && !_hasGetHit)
         {
+            if (Time.time - _getHitState.EntryTime < _inVulnerableTime) return;
+
             _hasGetHit = true;
             GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
             bloodVfx.SetActive(true);
@@ -191,8 +207,10 @@ public class PlayerStateManager : CharactersStateManager
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag(ENEMIES_WEAPON_TAG) && !_hasGetHit)
+        if (collision.CompareTag(ENEMIES_WEAPON_TAG) || collision.CompareTag(TRAP_TAG) && !_hasGetHit)
         {
+            if (Time.time - _getHitState.EntryTime < _inVulnerableTime) return;
+
             _hasGetHit = true;
             GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
             bloodVfx.SetActive(true);
@@ -200,11 +218,6 @@ public class PlayerStateManager : CharactersStateManager
             ChangeState(_getHitState);
         }
         //Debug.Log("hereStay: " + _hasGetHit);
-    }
-
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
     }
 
     private void HandleInput()
@@ -268,6 +281,56 @@ public class PlayerStateManager : CharactersStateManager
     private void AnimEventBackToIdle()
     {
         ChangeState(_idleState);
+    }
+
+    /// <summary>
+    ///2 hàm dưới để xử lý màu alpha khi player dính đòn  
+    /// </summary>
+
+    private IEnumerator Twinkling()
+    {
+        //Lock - Đảm bảo chỉ gọi coroutine sau khi đi đc 1 vòng Alpha Value:
+        //từ 1 -> AlphaVal -> 1
+        _hasStartCoroutine = true;
+        _spriteRenderer.color = new Color(1f, 1f, 1f, _alphaValGetHit);
+        //Debug.Log("tang lan: " + _count);
+
+        yield return new WaitForSeconds(_timeEachApplyAlpha);
+
+        //Thêm check đây nữa 
+        /*if (BuffsManager.Instance.GetTypeOfBuff(EBuffs.Invisible).IsAllowToUpdate)
+        {
+            _hasStartCoroutine = false;
+            yield return null;
+        }
+        else*/
+            _spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+
+        yield return new WaitForSeconds(_timeEachApplyAlpha);
+
+        _hasStartCoroutine = false;
+    }
+
+    private void HandleAlphaValueGetHit()
+    {
+        //if (BuffsManager.Instance.GetTypeOfBuff(EBuffs.Invisible).IsAllowToUpdate)
+            //return;
+
+        if (Time.time - _getHitState.EntryTime <= _inVulnerableTime && !_hasStartCoroutine && _isApplyGetHitEffect)
+            StartCoroutine(Twinkling());
+        else if (Time.time - _getHitState.EntryTime > _inVulnerableTime)
+        {
+            //Hết thgian miễn dmg r thì trả màu về như cũ cho nó
+            //NẾU trên ng 0 có buff vô hình, còn có thì return và set lại bool
+            /*if (BuffsManager.Instance.GetTypeOfBuff(EBuffs.Invisible).IsAllowToUpdate)
+            {
+                _isApplyGetHitEffect = false;
+                return;
+            }*/
+
+            _spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
+            _isApplyGetHitEffect = false;
+        }
     }
 
 }

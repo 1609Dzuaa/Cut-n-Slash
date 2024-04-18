@@ -6,6 +6,7 @@ public static class GameConstants
 {
     #region Tags
 
+    public const string UNTAGGED_TAG = "Untagged";
     public const string PLAYER_TAG = "Player";
     public const string PLAYER_SWORD_TAG = "PlayerSword";
     public const string TRAP_TAG = "Trap";
@@ -25,6 +26,7 @@ public static class GameConstants
 
     public const string STATE_ANIM = "state";
     public const string ANIM_PARA_ON_GROUND = "isOnGround";
+    public const string TRAP_ANIM_PARA = "On";
 
     #endregion
 }
