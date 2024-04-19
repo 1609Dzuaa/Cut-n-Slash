@@ -57,6 +57,11 @@ public class PlayerFallState : PlayerBaseState
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
+        if (_playerSM.IsFacingRight)
+            _playerSM.GetRigidbody2D.velocity = new Vector2(_playerSM.WalkSpeed, _playerSM.GetRigidbody2D.velocity.y);
+        else
+            _playerSM.GetRigidbody2D.velocity = new Vector2(-_playerSM.WalkSpeed, _playerSM.GetRigidbody2D.velocity.y);
+        //if (_playerSM.DirX != 0)
+        //_playerSM.GetRigidbody2D.velocity = new Vector2(_playerSM.WalkSpeed * _playerSM.DirX, _playerSM.GetRigidbody2D.velocity.y);
     }
 }

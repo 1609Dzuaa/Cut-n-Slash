@@ -21,17 +21,7 @@ public class PlayerAttack2State : PlayerBaseState
 
     public override void ExitState() { }
 
-    public override void UpdateState()
-    {
-        /*if (Time.time - _entryTime >= _playerSM.DelayUpdateAttack)
-            if (CheckIfCanAttack3())
-                _playerSM.ChangeState(_playerSM.Attack3State);*/
-    }
-
-    private bool CheckIfCanAttack3()
-    {
-        return Input.GetMouseButtonDown(0) && _playerSM.IsOnGround;
-    }
+    public override void UpdateState() { }
 
     public override void FixedUpdate()
     {
