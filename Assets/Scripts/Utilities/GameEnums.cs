@@ -56,4 +56,8 @@ public static class GameEnums
         ArcherAppearVfx = 4,
     }
 
+    public enum ESoundName
+    {
+
+    }
 }
