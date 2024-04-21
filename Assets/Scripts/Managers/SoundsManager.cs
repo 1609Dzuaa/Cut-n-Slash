@@ -50,7 +50,6 @@ public class SoundsManager : BaseSingleton<SoundsManager>
 
     public void PlaySfx(ESoundName sfxName, float volumeScale)
     {
-        //Tìm hiểu về Lambda expression
         Sounds s = Array.Find(_sfxSounds, x => x.SoundName == sfxName);
         if (s == null)
             Debug.Log(sfxName + " Not Found");
