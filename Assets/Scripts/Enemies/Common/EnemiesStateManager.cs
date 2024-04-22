@@ -69,16 +69,6 @@ public class EnemiesStateManager : CharactersStateManager
         base.Awake();
     }
 
-    protected override void OnEnable()
-    {
-        //EventsManager.Instance.SubcribeToAnEvent(EEvents.EnemiesOnReceiveDamage, ReceiveDamage);
-    }
-
-    protected override void OnDisable()
-    {
-        //EventsManager.Instance.UnSubcribeToAnEvent(EEvents.EnemiesOnReceiveDamage, ReceiveDamage);
-    }
-
     protected override void Start()
     {
         base.Start();
@@ -96,6 +86,7 @@ public class EnemiesStateManager : CharactersStateManager
         _state = _idleState;
         _state.EnterState(this);
         _currentHP = _enemiesSO.BaseHP;
+        _hpFill.fillOrigin = (_isFacingRight) ? 0 : 1;
         //Debug.Log("IfR, yAngles: " + _isFacingRight + ", " + transform.rotation.eulerAngles.y);
     }
 
@@ -144,7 +135,8 @@ public class EnemiesStateManager : CharactersStateManager
         if (collision.CompareTag(GameConstants.PLAYER_SWORD_TAG) && !_hasGetHit)
         {
             _hasGetHit = true;
-            ChangeState(_getHitState);
+            SpawnBloodVfx(collision.ClosestPoint(transform.position));
+            ChangeState((_currentHP == 0f) ? _dieState : _getHitState);
         }
     }
 
@@ -153,8 +145,16 @@ public class EnemiesStateManager : CharactersStateManager
         if (collision.CompareTag(GameConstants.PLAYER_SWORD_TAG) && !_hasGetHit)
         {
             _hasGetHit = true;
-            ChangeState(_getHitState);
+            SpawnBloodVfx(collision.ClosestPoint(transform.position));
+            ChangeState((_currentHP == 0f) ? _dieState : _getHitState);
         }
+    }
+
+    private void SpawnBloodVfx(Vector3 pos)
+    {
+        GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
+        bloodVfx.SetActive(true);
+        bloodVfx.transform.position = pos;
     }
 
     private void ReceiveDamage(object obj)
@@ -167,7 +167,7 @@ public class EnemiesStateManager : CharactersStateManager
     private void UpdateHPToUI()
     {
         _currentHP = Mathf.Clamp(_currentHP, 0f, _enemiesSO.BaseHP);
-        if (_currentHP == 0f) ChangeState(_dieState);
+        _hpFill.fillOrigin = (_isFacingRight) ? 1 : 0;
     }
 
     protected virtual void DetectPlayer()
@@ -302,6 +302,13 @@ public class EnemiesStateManager : CharactersStateManager
 
         yield return new WaitForSeconds(0.2f);
         _idleState.HasStartedFlip = false;
+    }
+
+    public override void FlippingSprite()
+    {
+        if (_state is EnemiesDieState) return;
+
+        base.FlippingSprite();
     }
 
     //Anim event của Atk

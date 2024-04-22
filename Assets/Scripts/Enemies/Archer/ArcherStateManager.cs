@@ -34,6 +34,8 @@ public class ArcherStateManager : EnemiesStateManager
 
     public ArcherTeleportState GetArcherTeleportState() { return _archerTeleportState; }
 
+    public GameObject HPBar { get => _hpBar; set => _hpBar = value; }
+
     protected override void Awake()
     {
         base.Awake();
@@ -55,6 +57,7 @@ public class ArcherStateManager : EnemiesStateManager
     protected override void Update()
     {
         base.Update();
+        //Debug.Log("Withdrawn Check:" + WithdrawnCheck());
     }
 
     protected override void FixedUpdate()
@@ -73,7 +76,8 @@ public class ArcherStateManager : EnemiesStateManager
 
     public bool WithdrawnCheck()
     {
-        _playerCol = Physics2D.OverlapBox(transform.position, _archerSO.WithdrawnableRange, _enemiesSO.PlayerLayer);
+        //Bug => phải cung cấp đủ tham số angle = 0f (0 quay) cho hàm nếu 0 sẽ bị nhầm lẫn
+        _playerCol = Physics2D.OverlapBox(transform.position, _archerSO.WithdrawnableRange, 0f, _enemiesSO.PlayerLayer);
         if (_playerCol == null) return false;
         return _playerCol.CompareTag(GameConstants.PLAYER_TAG);
     }

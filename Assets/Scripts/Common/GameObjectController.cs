@@ -45,7 +45,7 @@ public class GameObjectController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update() { }
 
-    public void FlippingSprite()
+    public virtual void FlippingSprite()
     {
         _isFacingRight = !_isFacingRight;
         transform.Rotate(0, 180, 0);

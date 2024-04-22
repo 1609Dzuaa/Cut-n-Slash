@@ -19,6 +19,7 @@ public class ArcherTeleportState : EnemiesBaseState
     public override void ExitState()
     {
         SpawnAppearVfx();
+        _archerSM.HPBar.SetActive(true);
     }
 
     public override void UpdateState()
@@ -29,6 +30,7 @@ public class ArcherTeleportState : EnemiesBaseState
     private void HandleTeleport()
     {
         SpawnDissapearVfx();
+        _archerSM.HPBar.SetActive(false);
 
         float teleDist = _archerSM.ArcherSO.TeleDist;
         float playerPosX = _archerSM.PlayerRef.position.x;

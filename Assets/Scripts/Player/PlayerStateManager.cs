@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GameEnums;
 using static GameConstants;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerStateManager : CharactersStateManager
 {
@@ -197,9 +198,7 @@ public class PlayerStateManager : CharactersStateManager
             if (Time.time - _getHitState.EntryTime < _inVulnerableTime) return;
 
             _hasGetHit = true;
-            GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
-            bloodVfx.SetActive(true);
-            bloodVfx.transform.position = collision.ClosestPoint(transform.position);
+            SpawnBloodVfx(collision.ClosestPoint(transform.position));
             ChangeState(_getHitState);
         }
         //Debug.Log("here: " + _hasGetHit);
@@ -212,12 +211,17 @@ public class PlayerStateManager : CharactersStateManager
             if (Time.time - _getHitState.EntryTime < _inVulnerableTime) return;
 
             _hasGetHit = true;
-            GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
-            bloodVfx.SetActive(true);
-            bloodVfx.transform.position = collision.ClosestPoint(transform.position);
+            SpawnBloodVfx(collision.ClosestPoint(transform.position));
             ChangeState(_getHitState);
         }
         //Debug.Log("hereStay: " + _hasGetHit);
+    }
+
+    private void SpawnBloodVfx(Vector3 pos)
+    {
+        GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
+        bloodVfx.SetActive(true);
+        bloodVfx.transform.position = pos;
     }
 
     private void HandleInput()
