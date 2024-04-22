@@ -15,6 +15,12 @@ public static class GameConstants
 
     #endregion
 
+    #region Layers
+
+    public const string IGNORE_ENEMIES_LAYER = "Ignore Enemies";
+
+    #endregion
+
     public const string HORIZONTAL_AXIS = "Horizontal";
     public const string VERTICAL_AXIS = "Vertical";
     public const string JUMP_BUTTON = "Jump";
