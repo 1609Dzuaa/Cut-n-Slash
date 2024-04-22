@@ -23,7 +23,7 @@ public class EnemiesStateManager : CharactersStateManager
 
     [Header("HP Ref")]
     [SerializeField] protected Image _hpFill;
-    [SerializeField] protected float _fillSpeed;
+    [SerializeField] protected GameObject _hpBar;
 
     #region States
 
@@ -102,17 +102,19 @@ public class EnemiesStateManager : CharactersStateManager
     protected override void Update()
     {
         base.Update();
+        if (_state is EnemiesDieState) return;
         UpdateHPToUI();
         DrawRayDetectPlayer();
         DrawRayDetectWall();
         DrawRayDetectGround();
         HandleChangeDirection();
-        Debug.Log("HP: " + _currentHP);
+        //Debug.Log("HP: " + _currentHP);
         //Debug.Log("Front, Back: " + _hasDetectedPlayer + ", " + _hasDetectedPlayerBackward);
     }
 
     protected override void FixedUpdate()
     {
+        if (_state is EnemiesDieState) return;
         base.FixedUpdate();
         DetectPlayer();
         DetectWall();
@@ -159,12 +161,13 @@ public class EnemiesStateManager : CharactersStateManager
     {
         float dmgReceive = (float)obj;
         _currentHP -= dmgReceive;
-        _hpFill.DOFillAmount(_currentHP / _enemiesSO.BaseHP, _fillSpeed);
+        _hpFill.DOFillAmount(_currentHP / _enemiesSO.BaseHP, _enemiesSO.FillSpeed);
     }
 
     private void UpdateHPToUI()
     {
         _currentHP = Mathf.Clamp(_currentHP, 0f, _enemiesSO.BaseHP);
+        if (_currentHP == 0f) ChangeState(_dieState);
     }
 
     protected virtual void DetectPlayer()
@@ -277,6 +280,11 @@ public class EnemiesStateManager : CharactersStateManager
     }
 
     protected virtual void SelfDestroy() { Destroy(gameObject); }
+
+    public void DeactiveHPUI()
+    {
+        _hpBar.SetActive(false);
+    }
 
     public IEnumerator TriggerAttack()
     {

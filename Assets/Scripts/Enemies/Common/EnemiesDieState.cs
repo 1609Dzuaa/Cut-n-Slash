@@ -8,6 +8,8 @@ public class EnemiesDieState : EnemiesBaseState
     {
         base.EnterState(charactersSM);
         _enemiesSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EEnemiesCommonState.Die);
+        _enemiesSM.GetRigidbody2D.velocity = Vector2.zero;
+        _enemiesSM.DeactiveHPUI();
         Debug.Log("Enemies Base Die");
     }
 

@@ -29,6 +29,7 @@ public class EnemiesSO : ScriptableObject
 
     [Header("HP")]
     [SerializeField] float _baseHP;
+    [SerializeField] float _fillSpeed;
 
     public LayerMask PlayerLayer { get { return _playerLayer; } }
 
@@ -55,4 +56,6 @@ public class EnemiesSO : ScriptableObject
     public float DelayFlipIfPlayerBackward { get { return _delayFlipIfPlayerBackward; } }
 
     public float BaseHP { get { return _baseHP; } }
+
+    public float FillSpeed { get { return _fillSpeed; } }
 }

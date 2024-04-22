@@ -233,7 +233,7 @@ MonoBehaviour:
   _enemiesSO: {fileID: 11400000, guid: f75c2cda5fc29114eaaf40a3b6441584, type: 2}
   _playerRef: {fileID: 0}
   _hpFill: {fileID: 6021976652799194985}
-  _fillSpeed: 0.315
+  _hpBar: {fileID: 7472065142294652094}
 --- !u!50 &3801352803499160502
 Rigidbody2D:
   serializedVersion: 4

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
   _gwLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -28,3 +28,5 @@ MonoBehaviour:
   _restTime: 1
   _patrolTime: 1.71
   _delayFlipIfPlayerBackward: 1
+  _baseHP: 100
+  _fillSpeed: 0.315

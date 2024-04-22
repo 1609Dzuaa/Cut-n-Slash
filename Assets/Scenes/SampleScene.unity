@@ -1651,6 +1651,10 @@ PrefabInstance:
       propertyPath: _playerRef
       value: 
       objectReference: {fileID: 727356915}
+    - target: {fileID: 4822407907024072089, guid: 1357d64ee95986947b18dc52539a8f6a, type: 3}
+      propertyPath: _playerRef
+      value: 
+      objectReference: {fileID: 727356915}
     - target: {fileID: 8291193024293278025, guid: 1357d64ee95986947b18dc52539a8f6a, type: 3}
       propertyPath: m_Name
       value: DevilEye
