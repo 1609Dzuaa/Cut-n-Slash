@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static GameEnums;
 
 public class EnemiesStateManager : CharactersStateManager
 {
@@ -17,6 +20,10 @@ public class EnemiesStateManager : CharactersStateManager
 
     [Header("Player Reference")]
     [SerializeField] protected Transform _playerRef;
+
+    [Header("HP Ref")]
+    [SerializeField] protected Image _hpFill;
+    [SerializeField] protected float _fillSpeed;
 
     #region States
 
@@ -37,6 +44,7 @@ public class EnemiesStateManager : CharactersStateManager
     protected bool _hasDetectedGround;
     protected bool _hasDetectedWall;
     protected bool _hasGetHit;
+    protected float _currentHP;
 
     public EnemiesSO GetEnemiesSO() { return _enemiesSO; }
 
@@ -61,9 +69,25 @@ public class EnemiesStateManager : CharactersStateManager
         base.Awake();
     }
 
+    protected override void OnEnable()
+    {
+        //EventsManager.Instance.SubcribeToAnEvent(EEvents.EnemiesOnReceiveDamage, ReceiveDamage);
+    }
+
+    protected override void OnDisable()
+    {
+        //EventsManager.Instance.UnSubcribeToAnEvent(EEvents.EnemiesOnReceiveDamage, ReceiveDamage);
+    }
+
     protected override void Start()
     {
         base.Start();
+        EventsManager.Instance.SubcribeToAnEvent(EEvents.EnemiesOnReceiveDamage, ReceiveDamage);
+    }
+
+    private void OnDestroy()
+    {
+        EventsManager.Instance.UnSubcribeToAnEvent(EEvents.EnemiesOnReceiveDamage, ReceiveDamage);
     }
 
     protected override void SetupProperties()
@@ -71,17 +95,19 @@ public class EnemiesStateManager : CharactersStateManager
         base.SetupProperties();
         _state = _idleState;
         _state.EnterState(this);
+        _currentHP = _enemiesSO.BaseHP;
         //Debug.Log("IfR, yAngles: " + _isFacingRight + ", " + transform.rotation.eulerAngles.y);
     }
 
     protected override void Update()
     {
         base.Update();
+        UpdateHPToUI();
         DrawRayDetectPlayer();
         DrawRayDetectWall();
         DrawRayDetectGround();
         HandleChangeDirection();
-        //Debug.Log("Wall, Ground: " + _hasDetectedWall + ", " + _hasDetectedGround);
+        Debug.Log("HP: " + _currentHP);
         //Debug.Log("Front, Back: " + _hasDetectedPlayer + ", " + _hasDetectedPlayerBackward);
     }
 
@@ -127,6 +153,18 @@ public class EnemiesStateManager : CharactersStateManager
             _hasGetHit = true;
             ChangeState(_getHitState);
         }
+    }
+
+    private void ReceiveDamage(object obj)
+    {
+        float dmgReceive = (float)obj;
+        _currentHP -= dmgReceive;
+        _hpFill.DOFillAmount(_currentHP / _enemiesSO.BaseHP, _fillSpeed);
+    }
+
+    private void UpdateHPToUI()
+    {
+        _currentHP = Mathf.Clamp(_currentHP, 0f, _enemiesSO.BaseHP);
     }
 
     protected virtual void DetectPlayer()

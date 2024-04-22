@@ -27,6 +27,9 @@ public class EnemiesSO : ScriptableObject
     [SerializeField] float _patrolTime;
     [SerializeField] float _delayFlipIfPlayerBackward;
 
+    [Header("HP")]
+    [SerializeField] float _baseHP;
+
     public LayerMask PlayerLayer { get { return _playerLayer; } }
 
     public LayerMask GWLayer { get { return _gwLayer; } }
@@ -50,4 +53,6 @@ public class EnemiesSO : ScriptableObject
     public float PatrolTime { get { return _patrolTime; } }
 
     public float DelayFlipIfPlayerBackward { get { return _delayFlipIfPlayerBackward; } }
+
+    public float BaseHP { get { return _baseHP; } }
 }

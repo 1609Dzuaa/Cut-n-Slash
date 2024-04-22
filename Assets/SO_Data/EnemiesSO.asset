@@ -28,3 +28,4 @@ MonoBehaviour:
   _restTime: 1
   _patrolTime: 1.71
   _delayFlipIfPlayerBackward: 1
+  _baseHP: 100
