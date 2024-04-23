@@ -26,6 +26,8 @@ public class PlayerWalkState : PlayerBaseState
             _playerSM.ChangeState(_playerSM.Attack2State);
         else if (CheckIfCanAttack(0, true))
             _playerSM.ChangeState(_playerSM.Attack1State);
+        else if (CheckIfCanDash())
+            _playerSM.ChangeState(_playerSM.DashState);
         else if (CheckIfCanRoll())
             _playerSM.ChangeState(_playerSM.RollState);
         else if (CheckIfCanJump())
@@ -60,6 +62,12 @@ public class PlayerWalkState : PlayerBaseState
         return Input.GetMouseButtonDown(0) && AtkEntryTime != 0
             && Time.time - AtkEntryTime <= enableTime
             && _playerSM.IsOnGround;
+    }
+
+    private bool CheckIfCanDash()
+    {
+        float dashEntryTime = _playerSM.DashState.EntryTime;
+        return Input.GetKeyDown(KeyCode.E) && Time.time - dashEntryTime >= _playerSM.DashDelay;
     }
 
     private bool CheckIfCanRoll()

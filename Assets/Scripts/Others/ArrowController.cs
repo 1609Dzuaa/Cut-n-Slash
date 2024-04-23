@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 using static GameEnums;
 
@@ -22,6 +23,8 @@ public class ArrowController : GameObjectController
 {
     [SerializeField, Range(0f, 15f)] float _speed;
     [SerializeField] float _existTime;
+    [SerializeField, Tooltip("Với object thẳng đứng thì" +
+        " isFr sẽ hướng lên và ngược lại")] bool _isHorizontal;
 
     float _entryTime;
     string _arrowID;
@@ -68,17 +71,34 @@ public class ArrowController : GameObjectController
             //Dealing Dmg
             //Lấy vị trí va chạm
             ContactPoint2D contacts = collision.GetContact(0);
-            GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
-            bloodVfx.SetActive(true);
-            bloodVfx.transform.position = contacts.point;
+            SpawnBloodVfx(contacts.point);
             gameObject.SetActive(false);
         }
     }
 
+    private void SpawnBloodVfx(Vector3 pos)
+    {
+        GameObject bloodVfx = PoolManager.Instance.GetObjectInPool(EPoolable.BloodVfx);
+        bloodVfx.SetActive(true);
+        bloodVfx.transform.position = pos;
+    }
+
     private void FixedUpdate()
     {
-        Vector2 vectorSpeed = new(_speed, 0f);
-        _rb.velocity = (_isFacingRight) ? vectorSpeed : vectorSpeed * Vector2.left; 
+        Vector2 vectorSpeed = new(0f, 0f);
+
+        if (!_isHorizontal)
+        {
+            vectorSpeed = new(_speed, 0f);
+            vectorSpeed = (_isFacingRight) ? vectorSpeed : vectorSpeed * Vector2.left;
+        }
+        else
+        {
+            vectorSpeed = new(0f, _speed);
+            vectorSpeed = (_isFacingRight) ? vectorSpeed : vectorSpeed * Vector2.down;
+        }
+
+        _rb.velocity = vectorSpeed;
     }
 
     private void ReceiveInfor(object obj)

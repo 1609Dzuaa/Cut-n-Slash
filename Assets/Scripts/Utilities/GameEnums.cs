@@ -54,6 +54,8 @@ public static class GameEnums
         BloodVfx = 2,
         ArcherTeleportVfx = 3,
         ArcherAppearVfx = 4,
+        ShooterArrow = 5,
+
     }
 
     public enum ESoundName
