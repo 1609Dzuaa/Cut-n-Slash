@@ -12,7 +12,7 @@ public class EnemiesDieState : EnemiesBaseState
         _enemiesSM.DeactiveHPUI();
         //enemies khi die thì cho phép player đi xuyên qua
         _enemiesSM.gameObject.layer = LayerMask.NameToLayer(GameConstants.IGNORE_ENEMIES_LAYER);
-        Debug.Log("Enemies Base Die");
+        //Debug.Log("Enemies Base Die");
     }
 
     public override void ExitState()

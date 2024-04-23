@@ -17,7 +17,7 @@ public class PlayerRollState : PlayerBaseState
         //x: 0.3274712; y: -0.7
         //Sử dụng properties bên Animation
         _entryTime = Time.time;
-        Debug.Log("Roll");
+        //Debug.Log("Roll");
     }
 
     public override void ExitState()

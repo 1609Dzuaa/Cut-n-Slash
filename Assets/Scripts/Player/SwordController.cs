@@ -6,7 +6,7 @@ using static GameEnums;
 public class SwordController : MonoBehaviour
 {
     [Header("Damage Related")]
-    [SerializeField] float _dmgDealt;
+    [SerializeField] float _dmgDeal;
 
     bool _hasDealtDmg;
 
@@ -20,7 +20,10 @@ public class SwordController : MonoBehaviour
         if(collision.CompareTag(GameConstants.ENEMIES_TAG) && !_hasDealtDmg)
         {
             _hasDealtDmg = true;
-            EventsManager.Instance.NotifyObservers(EEvents.EnemiesOnReceiveDamage, _dmgDealt);
+            string enemyID = collision.gameObject.GetComponent<EnemiesStateManager>().ID;
+
+            DamageReceiveInfor info = new(enemyID, _dmgDeal);
+            EventsManager.Instance.NotifyObservers(EEvents.EnemiesOnReceiveDamage, info);
         }
     }
 }

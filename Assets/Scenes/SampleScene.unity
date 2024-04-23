@@ -669,7 +669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f25f19451481947821312d717e2961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dmgDealt: 10
+  _dmgDeal: 10
 --- !u!1 &727356913
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,7 +954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f25f19451481947821312d717e2961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dmgDealt: 15
+  _dmgDeal: 15
 --- !u!1 &1301738333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f25f19451481947821312d717e2961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dmgDealt: 20
+  _dmgDeal: 20
 --- !u!1001 &52037130074430056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1153,7 +1153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 52037128963038693, guid: a8a2f1ad694a0ce4a90521a48412d9fb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 52037128963038695, guid: a8a2f1ad694a0ce4a90521a48412d9fb, type: 3}
       propertyPath: m_RootOrder
@@ -1376,7 +1376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3801352803499160521, guid: fff8743f9a5bea548b037a925d92a2ca, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3801352803499160523, guid: fff8743f9a5bea548b037a925d92a2ca, type: 3}
       propertyPath: m_RootOrder
@@ -1428,6 +1428,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5502850668137301506, guid: fff8743f9a5bea548b037a925d92a2ca, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6021976652799194985, guid: fff8743f9a5bea548b037a925d92a2ca, type: 3}
+      propertyPath: m_FillOrigin
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6819677736213315320, guid: fff8743f9a5bea548b037a925d92a2ca, type: 3}

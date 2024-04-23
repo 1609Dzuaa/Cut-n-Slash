@@ -16,7 +16,7 @@ public class PlayerAttack2State : PlayerBaseState
         _playerSM.Attack1State.EntryTime = 0;
         _entryTime = Time.time;
         _playerSM.StartCoroutine(_playerSM.BackToIdle());
-        Debug.Log("Atk2");
+        //Debug.Log("Atk2");
     }
 
     public override void ExitState() { }

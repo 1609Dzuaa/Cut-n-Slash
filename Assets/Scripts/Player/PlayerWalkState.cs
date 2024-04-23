@@ -8,7 +8,7 @@ public class PlayerWalkState : PlayerBaseState
     {
         base.EnterState(charactersSM);
         _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Walk);
-        Debug.Log("Walk");
+        //Debug.Log("Walk");
     }
 
     public override void ExitState()

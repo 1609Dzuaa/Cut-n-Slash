@@ -1,14 +1,25 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static GameEnums;
 
+public struct DamageReceiveInfor
+{
+    public string ID;
+    public float DamageReceive;
+
+    public DamageReceiveInfor(string id, float damage)
+    {
+        ID = id;
+        DamageReceive = damage;
+    }
+}
+
 public class EnemiesStateManager : CharactersStateManager
 {
-    //Quái trông vẫn hơi đơ ?
-
     [Header("Check Properties")]
     [SerializeField] protected Transform _playerCheck;
     [SerializeField, Tooltip("Check Player ở phía sau")] protected Transform _playerCheck2;
@@ -45,6 +56,7 @@ public class EnemiesStateManager : CharactersStateManager
     protected bool _hasDetectedWall;
     protected bool _hasGetHit;
     protected float _currentHP;
+    protected string _enemyID;
 
     public EnemiesSO GetEnemiesSO() { return _enemiesSO; }
 
@@ -64,6 +76,8 @@ public class EnemiesStateManager : CharactersStateManager
 
     public Transform PlayerRef { get => _playerRef; }
 
+    public string ID { get => _enemyID; }
+
     protected override void Awake()
     {
         base.Awake();
@@ -72,12 +86,6 @@ public class EnemiesStateManager : CharactersStateManager
     protected override void Start()
     {
         base.Start();
-        EventsManager.Instance.SubcribeToAnEvent(EEvents.EnemiesOnReceiveDamage, ReceiveDamage);
-    }
-
-    private void OnDestroy()
-    {
-        EventsManager.Instance.UnSubcribeToAnEvent(EEvents.EnemiesOnReceiveDamage, ReceiveDamage);
     }
 
     protected override void SetupProperties()
@@ -86,20 +94,25 @@ public class EnemiesStateManager : CharactersStateManager
         _state = _idleState;
         _state.EnterState(this);
         _currentHP = _enemiesSO.BaseHP;
-        _hpFill.fillOrigin = (_isFacingRight) ? 0 : 1;
+        _enemyID = Guid.NewGuid().ToString();
+        EventsManager.Instance.SubcribeToAnEvent(EEvents.EnemiesOnReceiveDamage, ReceiveDamage);
         //Debug.Log("IfR, yAngles: " + _isFacingRight + ", " + transform.rotation.eulerAngles.y);
+    }
+
+    private void OnDestroy()
+    {
+        EventsManager.Instance.UnSubcribeToAnEvent(EEvents.EnemiesOnReceiveDamage, ReceiveDamage);
     }
 
     protected override void Update()
     {
         base.Update();
         if (_state is EnemiesDieState) return;
-        UpdateHPToUI();
         DrawRayDetectPlayer();
         DrawRayDetectWall();
         DrawRayDetectGround();
         HandleChangeDirection();
-        //Debug.Log("HP: " + _currentHP);
+        Debug.Log("HP: " + _currentHP);
         //Debug.Log("Front, Back: " + _hasDetectedPlayer + ", " + _hasDetectedPlayerBackward);
     }
 
@@ -114,7 +127,8 @@ public class EnemiesStateManager : CharactersStateManager
 
     public override void ChangeState(CharacterBaseState state)
     {
-        if (_state is EnemiesGetHitState && state is EnemiesGetHitState)
+        if (_state is EnemiesGetHitState && state is EnemiesGetHitState
+            || _state is EnemiesDieState)
             return;
 
         _state.ExitState();
@@ -136,7 +150,7 @@ public class EnemiesStateManager : CharactersStateManager
         {
             _hasGetHit = true;
             SpawnBloodVfx(collision.ClosestPoint(transform.position));
-            ChangeState((_currentHP == 0f) ? _dieState : _getHitState);
+            ChangeState(_getHitState);
         }
     }
 
@@ -146,7 +160,7 @@ public class EnemiesStateManager : CharactersStateManager
         {
             _hasGetHit = true;
             SpawnBloodVfx(collision.ClosestPoint(transform.position));
-            ChangeState((_currentHP == 0f) ? _dieState : _getHitState);
+            ChangeState(_getHitState);
         }
     }
 
@@ -159,15 +173,13 @@ public class EnemiesStateManager : CharactersStateManager
 
     private void ReceiveDamage(object obj)
     {
-        float dmgReceive = (float)obj;
-        _currentHP -= dmgReceive;
-        _hpFill.DOFillAmount(_currentHP / _enemiesSO.BaseHP, _enemiesSO.FillSpeed);
-    }
+        DamageReceiveInfor dmgReceiveInfo = (DamageReceiveInfor)obj;
+        if (_enemyID != dmgReceiveInfo.ID) return;
 
-    private void UpdateHPToUI()
-    {
+        _currentHP -= dmgReceiveInfo.DamageReceive;
         _currentHP = Mathf.Clamp(_currentHP, 0f, _enemiesSO.BaseHP);
-        _hpFill.fillOrigin = (_isFacingRight) ? 1 : 0;
+        _hpFill.DOFillAmount(_currentHP / _enemiesSO.BaseHP, _enemiesSO.FillSpeed);
+        if (_currentHP == 0) ChangeState(_dieState);
     }
 
     protected virtual void DetectPlayer()

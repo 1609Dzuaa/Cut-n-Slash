@@ -14,7 +14,7 @@ public class PlayerAttack1State : PlayerBaseState
         _playerSM.GetAnim.SetInteger(GameConstants.STATE_ANIM, (int)GameEnums.EPlayerState.Attack1);
         _playerSM.StartCoroutine(_playerSM.BackToIdle());
         _entryTime = Time.time;
-        Debug.Log("Atk1");
+        //Debug.Log("Atk1");
     }
 
     public override void ExitState() { }
