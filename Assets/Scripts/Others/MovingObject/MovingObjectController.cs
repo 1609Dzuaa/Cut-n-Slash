@@ -1,0 +1,82 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MovingObjectController : GameObjectController
+{
+    [SerializeField] protected float _speed;
+    [SerializeField] protected bool _isVertical;
+    [SerializeField] protected Transform _maxPointLeft;
+    [SerializeField] protected Transform _maxPointRight;
+    [SerializeField, Tooltip("Nếu cần active false sau ... (s)")] protected float _existTime;
+    protected bool _needMinMax = true;
+    protected float _entryTime;
+    //1 = Left || Top
+    //2 = Right || Bot
+    //Muốn biến th này thành Horizontal/Vertical thì chỉnh ngoài Inspector
+
+    public float Speed { get => _speed; set => _speed = value; }
+
+    public bool NeedMinMax { get => _needMinMax; set => _needMinMax = value; }
+
+    protected override void OnEnable()
+    {
+        _entryTime = Time.time;
+    }
+
+    protected override void Update()
+    {
+        if (!_isVertical)
+            HorizontalMove();
+        else
+            VerticalMove();
+    }
+
+    private void HorizontalMove()
+    {
+        if (_needMinMax)
+        {
+            if (transform.position.x <= _maxPointLeft.position.x)
+            {
+                transform.position = new Vector3(_maxPointLeft.position.x, transform.position.y, transform.position.z);
+                _speed = -_speed;
+            }
+            else if (transform.position.x >= _maxPointRight.position.x)
+            {
+                transform.position = new Vector3(_maxPointRight.position.x, transform.position.y, transform.position.z);
+                _speed = -_speed;
+            }
+        }
+        else if (Time.time - _entryTime >= _existTime)
+        {
+            gameObject.SetActive(false);
+            //Debug.Log("false");
+        }
+
+        transform.position += new Vector3(_speed, 0f, 0) * Time.deltaTime;
+    }
+
+    private void VerticalMove()
+    {
+        if (_needMinMax)
+        {
+            if (transform.position.y >= _maxPointLeft.position.y)
+            {
+                transform.position = new Vector3(transform.position.x, _maxPointLeft.position.y, transform.position.z);
+                _speed = -_speed;
+            }
+            else if (transform.position.y <= _maxPointRight.position.y)
+            {
+                transform.position = new Vector3(transform.position.x, _maxPointRight.position.y, transform.position.z);
+                _speed = -_speed;
+            }
+        }
+        else if (Time.time - _entryTime >= _existTime)
+        {
+            gameObject.SetActive(false);
+            //Debug.Log("false");
+        }
+
+        transform.position += new Vector3(0, _speed, 0) * Time.deltaTime;
+    }
+}
