@@ -12,6 +12,7 @@ public class EventsManager : BaseSingleton<EventsManager>
     //Thêm sẵn các Action tương ứng với Event trong EnumEvents tại đây
     private readonly Action<object> EnemiesOnReceiveDamage;
     private readonly Action<object> ArrowOnReceiveInfor;
+    private readonly Action<object> PopupTextOnReceiveInfor;
 
     //Làm việc với Event thì nên phân biệt với nhau bằng key là object
     //Tránh cùng 1 lúc nó Notify tất cả Func đã đky event đó
@@ -28,11 +29,14 @@ public class EventsManager : BaseSingleton<EventsManager>
     {
         _dictEvents.Add(EEvents.EnemiesOnReceiveDamage, EnemiesOnReceiveDamage);
         _dictEvents.Add(EEvents.ArrowOnReceiveInfor, ArrowOnReceiveInfor);
+        _dictEvents.Add(EEvents.PopupTextOnReceiveInfor, PopupTextOnReceiveInfor);
         //Val là cái event, còn thg nào quan tâm cái event đó thì gọi hàm dưới
     }
 
     public void SubcribeToAnEvent(EEvents eventType, Action<object> function)
     {
+        //if (!_dictEvents.ContainsKey(eventType))
+            //_dictEvents.Add(eventType, function);
         _dictEvents[eventType] += function;
     }
 

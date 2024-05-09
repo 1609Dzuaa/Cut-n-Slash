@@ -24,6 +24,17 @@ public class SwordController : MonoBehaviour
 
             DamageReceiveInfor info = new(enemyID, _dmgDeal);
             EventsManager.Instance.NotifyObservers(EEvents.EnemiesOnReceiveDamage, info);
+            SpawnPopupDMG(collision.transform.position, _dmgDeal);
         }
+    }
+
+    private void SpawnPopupDMG(Vector3 position, float damage)
+    {
+        GameObject pUpText = PoolManager.Instance.GetObjectInPool(EPoolable.PopupDmg);
+        pUpText.SetActive(true);
+
+        string id = pUpText.GetComponent<PopupDMG>().ID;
+        PopupDMGInfor info = new(id, position, damage);
+        EventsManager.Instance.NotifyObservers(EEvents.PopupTextOnReceiveInfor, info);
     }
 }

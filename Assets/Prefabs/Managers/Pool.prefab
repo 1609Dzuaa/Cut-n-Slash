@@ -60,3 +60,6 @@ MonoBehaviour:
   - _ePoolable: 5
     _GObjPoolable: {fileID: 8317189356090706196, guid: a351f43b5d422f046a6f462643e92a06, type: 3}
     _ammount: 5
+  - _ePoolable: 6
+    _GObjPoolable: {fileID: 5844912903400334840, guid: a5e285581c7a9464fb9eabed0b271838, type: 3}
+    _ammount: 5

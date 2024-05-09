@@ -45,6 +45,7 @@ public static class GameEnums
         EnemiesOnReceiveDamage = 1,
         PlayerOnReceiveDamage = 2,
         ArrowOnReceiveInfor = 3,
+        PopupTextOnReceiveInfor = 4,
 
     }
 
@@ -55,7 +56,7 @@ public static class GameEnums
         ArcherTeleportVfx = 3,
         ArcherAppearVfx = 4,
         ShooterArrow = 5,
-
+        PopupDmg = 6,
     }
 
     public enum ESoundName
