@@ -188,3 +188,4 @@ MonoBehaviour:
   _pUpText: {fileID: 5844912903400334843}
   _pUpSpeed: 6
   _existTime: 1
+  _alphaDecreaseOverTime: 0.007

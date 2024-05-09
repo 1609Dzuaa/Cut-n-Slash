@@ -24,6 +24,7 @@ public class PopupDMG : MonoBehaviour
     [SerializeField] TextMeshPro _pUpText;
     [SerializeField] float _pUpSpeed;
     [SerializeField] float _existTime;
+    [SerializeField] float _alphaDecreaseOverTime;
 
     float _entryTime;
     string _pUpTextID;
@@ -32,12 +33,13 @@ public class PopupDMG : MonoBehaviour
 
     private void Awake()
     {
-        _pUpTextID = Guid.NewGuid().ToString();
+        _pUpTextID = Guid.NewGuid().ToString(); 
     }
 
     private void OnEnable()
     {
         _entryTime = Time.time;
+        _pUpText.alpha = 1.0f;
         EventsManager.Instance.SubcribeToAnEvent(EEvents.PopupTextOnReceiveInfor, ReceiveInfor);
     }
 
@@ -59,7 +61,10 @@ public class PopupDMG : MonoBehaviour
     void Update()
     {
         if (Time.time - _entryTime < _existTime)
+        {
             transform.position += new Vector3(0f, _pUpSpeed, 0f) * Time.deltaTime;
+            _pUpText.alpha -= _alphaDecreaseOverTime;
+        }
         else
             gameObject.SetActive(false);
     }
