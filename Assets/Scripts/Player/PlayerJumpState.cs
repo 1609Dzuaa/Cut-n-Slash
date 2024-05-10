@@ -45,11 +45,11 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void FixedUpdate()
     {
-        if (_playerSM.IsFacingRight)
-            _playerSM.GetRigidbody2D.velocity = new Vector2(_playerSM.WalkSpeed, _playerSM.GetRigidbody2D.velocity.y);
+        /*if (_playerSM.IsFacingRight)
+            _playerSM.GetRigidbody2D.velocity = new Vector2(_playerSM.WalkSpeed * _playerSM.DirX, _playerSM.GetRigidbody2D.velocity.y);
         else
-            _playerSM.GetRigidbody2D.velocity = new Vector2(-_playerSM.WalkSpeed, _playerSM.GetRigidbody2D.velocity.y);
-        //if (_playerSM.DirX != 0)
-        //_playerSM.GetRigidbody2D.velocity = new Vector2(_playerSM.WalkSpeed * _playerSM.DirX, _playerSM.GetRigidbody2D.velocity.y);
+            _playerSM.GetRigidbody2D.velocity = new Vector2(-_playerSM.WalkSpeed * _playerSM.DirX, _playerSM.GetRigidbody2D.velocity.y);
+        //if (_playerSM.DirX != 0)*/
+        _playerSM.GetRigidbody2D.velocity = new Vector2(_playerSM.WalkSpeed * _playerSM.DirX, _playerSM.GetRigidbody2D.velocity.y);
     }
 }

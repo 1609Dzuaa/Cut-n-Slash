@@ -12,6 +12,7 @@ public static class GameConstants
     public const string TRAP_TAG = "Trap";
     public const string ENEMIES_TAG = "Enemies";
     public const string ENEMIES_WEAPON_TAG = "EnemiesWeapon";
+    public const string GOLD_COIN_TAG = "GoldCoin";
 
     #endregion
 

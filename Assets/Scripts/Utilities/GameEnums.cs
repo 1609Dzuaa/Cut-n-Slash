@@ -57,6 +57,8 @@ public static class GameEnums
         ArcherAppearVfx = 4,
         ShooterArrow = 5,
         PopupDmg = 6,
+        GoldCoin = 7,
+
     }
 
     public enum ESoundName

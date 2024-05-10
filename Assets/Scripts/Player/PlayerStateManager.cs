@@ -201,6 +201,12 @@ public class PlayerStateManager : CharactersStateManager
             SpawnBloodVfx(collision.ClosestPoint(transform.position));
             ChangeState(_getHitState);
         }
+        else if (collision.CompareTag(GOLD_COIN_TAG))
+        {
+            collision.gameObject.SetActive(false);
+            //Nâng số GCoin hiện có
+            //Fire an event here
+        }
         //Debug.Log("here: " + _hasGetHit);
     }
 
